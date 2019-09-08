@@ -4,9 +4,10 @@ import axios from 'axios'
 import "./App.css";
 import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations"
-import * as $ from "jquery";
-import Player from "./Player";
 import TopTracks from "./Components/TopTracks";
+import Button from '@material-ui/core/Button';
+
+
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 // Replace with your app's client ID, redirect URI and desired scopes
 const clientId = "2badfb5ce5af4cf3840edb1968683fdf";
@@ -52,6 +53,7 @@ class App extends Component {
           name:""
         }]
       },
+      
       topArtists:{
         items: [{
           id: "",
@@ -89,6 +91,7 @@ class App extends Component {
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
+    this.shuffleArray = this.shuffleArray.bind(this);
   }
 
   getUserInfo(token){
@@ -108,7 +111,7 @@ class App extends Component {
       ).then(res => {
         console.log(res)
         this.setState({
-          topTracks: res.data
+          topTracks: res.data,
         },()=>{
           this.getRecommendations(token);
         });
@@ -126,8 +129,27 @@ class App extends Component {
       });
   }
 
+  shuffleArray(array2) {
+    const array = [...array2];
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    console.log(array[0].name);
+    return array;
+  }
+
   getRecommendations(token){
     // console.log(this.state.topArtists.items[0])
+    const topTracksShuffled = this.shuffleArray(this.state.topTracks.items);
+    // const topTracksShuffled = this.state.topTracksShuffled.items;
+
+    console.log(topTracksShuffled)
+    console.log(topTracksShuffled[0].name+','+
+    topTracksShuffled[1].name+','+
+    topTracksShuffled[2].name+','+
+    topTracksShuffled[3].name+','+
+    topTracksShuffled[4].name);
     axios.get(
       'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
       params:{
@@ -143,11 +165,11 @@ class App extends Component {
       // this.state.topArtists.items[2].genres[0]+','+
       // this.state.topArtists.items[3].genres[0]+','+
       // this.state.topArtists.items[4].genres[0],
-      seed_tracks:this.state.topTracks.items[0].id+','+
-      this.state.topTracks.items[1].id+','+
-      this.state.topTracks.items[2].id+','+
-      this.state.topTracks.items[3].id+','+
-      this.state.topTracks.items[4].id
+      seed_tracks:topTracksShuffled[0].id+','+
+      topTracksShuffled[1].id+','+
+      topTracksShuffled[2].id+','+
+      topTracksShuffled[3].id+','+
+      topTracksShuffled[4].id
     }}
       ).then(res => {
         console.log(res)
@@ -192,12 +214,15 @@ render() {
   return (
     <div className="App">
       {!this.state.token &&(
-        <a
-          className="btn btn--loginApp-link"
-          href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}
-        >
-          Login to Spotify
-        </a>
+        <Button variant="contained" color="secondary" href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}>
+        Login to Spotify
+        </Button>
+        // <a
+        //   className="btn btn--loginApp-link"
+        //   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}
+        // >
+        //   Login to Spotify
+        // </a>
       )}
       {this.state.token &&(
         <div>
