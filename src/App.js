@@ -29,7 +29,6 @@ const hash = window.location.hash
     }
     return initial;
   }, {});
-console.log(window.location.hash)
 window.location.hash = "";
 class App extends Component {
   constructor(props){
@@ -88,10 +87,30 @@ class App extends Component {
         progress_ms: 0
       }
     };
+    this.authUser = this.authUser.bind(this);
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
+    this.checkToken = this.checkToken.bind(this);
+  }
+
+  checkToken(){
+    const startTime = localStorage.getItem('sDate');
+    const currentTime = new Date().getTime();
+    const expDuration = 3600 * 1000;
+    const notAccepted = startTime === undefined;
+    const isExpired = startTime !== undefined && currentTime - startTime >expDuration;
+    if( notAccepted || isExpired){
+      localStorage.removeItem('sDate');
+      localStorage.removeItem('access_token');
+    }else{
+      hash.access_token = localStorage.getItem('access_token');
+    }
+  }
+
+  authUser(){
+    window.location.replace(`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`);
   }
 
   getUserInfo(token){
@@ -197,8 +216,11 @@ class App extends Component {
 
   componentDidMount() {
     // Set token
+    this.checkToken();
     let _token = hash.access_token;
     if (_token) {
+      localStorage.setItem('sDate',new Date().getTime());
+      localStorage.setItem('access_token',_token);
       console.log(_token)
       this.getUserInfo(_token);
       this.getTopTracks(_token);
@@ -214,9 +236,12 @@ render() {
   return (
     <div className="App">
       {!this.state.token &&(
-        <Button variant="contained" color="secondary" href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}>
-        Login to Spotify
+        <Button variant="contained" color="secondary" onClick={this.authUser}>
+          Login to Spotify
         </Button>
+        // <Button variant="contained" color="secondary" href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}>
+        // Login to Spotify
+        // </Button>
         // <a
         //   className="btn btn--loginApp-link"
         //   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}
