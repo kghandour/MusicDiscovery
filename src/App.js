@@ -5,7 +5,8 @@ import "./App.css";
 import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations"
 import TopTracks from "./Components/TopTracks";
-import Button from '@material-ui/core/Button';
+import 'bootstrap/dist/css/bootstrap.css'
+import {Container} from 'react-bootstrap'
 
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
@@ -63,6 +64,13 @@ class App extends Component {
       },
       recommendations:{
         tracks:[{
+          album:{
+            images:[{
+              height:"",
+              url:"",
+              width:"",
+            }]
+          },
           artists:[{
             external_urls:{},
             id:"",
@@ -90,7 +98,6 @@ class App extends Component {
     this.authUser = this.authUser.bind(this);
     this.getUserInfo = this.getUserInfo.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
-    this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
     this.checkToken = this.checkToken.bind(this);
   }
@@ -98,14 +105,18 @@ class App extends Component {
   checkToken(){
     const startTime = localStorage.getItem('sDate');
     const currentTime = new Date().getTime();
-    const expDuration = 3600 * 1000;
+    const expDuration = 3600*1000;
     const notAccepted = startTime === undefined;
-    const isExpired = startTime !== undefined && currentTime - startTime >expDuration;
+    const isExpired = startTime !== undefined && (currentTime - startTime) >expDuration;
+    console.log("Testing token: "+startTime+" Curr time: "+currentTime+" Diff: "+ (currentTime-startTime))
     if( notAccepted || isExpired){
       localStorage.removeItem('sDate');
       localStorage.removeItem('access_token');
+      localStorage.removeItem('user_info');
+      localStorage.removeItem('user_top_tracks');
+      return false;
     }else{
-      hash.access_token = localStorage.getItem('access_token');
+      return true;
     }
   }
 
@@ -114,34 +125,50 @@ class App extends Component {
   }
 
   getUserInfo(token){
-    axios.get(
-      'https://api.spotify.com/v1/me' ,{headers: { Authorization: 'Bearer '+token}}
-      ).then(res => {
-        console.log(res)
-        this.setState({
-          user: res.data
+    const user_info = localStorage.getItem('user_info');
+    if(!user_info){
+      axios.get(
+        'https://api.spotify.com/v1/me' ,{headers: { Authorization: 'Bearer '+token}}
+        ).then(res => {
+          localStorage.setItem('user_info',JSON.stringify(res.data));
+          this.setState({
+            user: res.data
+          });
         });
+    }else{
+      this.setState({
+        user: JSON.parse(user_info)
       });
+    }
+    
   }
 
   getTopTracks(token){
+    const user_top_tracks = localStorage.getItem('user_top_tracks');
+    if(!user_top_tracks){
     axios.get(
       'https://api.spotify.com/v1/me/top/tracks' ,{headers: { Authorization: 'Bearer '+token}}
       ).then(res => {
-        console.log(res)
+        localStorage.setItem('user_top_tracks',JSON.stringify(res.data));
         this.setState({
           topTracks: res.data,
         },()=>{
           this.getRecommendations(token);
         });
       });
+    }else{
+      this.setState({
+        topTracks: JSON.parse(user_top_tracks)
+      },()=>{
+        this.getRecommendations(token);
+      });
+    }
   }
 
   getTopArtists(token){
     axios.get(
       'https://api.spotify.com/v1/me/top/artists' ,{headers: { Authorization: 'Bearer '+token}}
       ).then(res => {
-        console.log(res)
         this.setState({
           topArtists: res.data
         });
@@ -154,36 +181,14 @@ class App extends Component {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    console.log(array[0].name);
     return array;
   }
 
   getRecommendations(token){
-    // console.log(this.state.topArtists.items[0])
     const topTracksShuffled = this.shuffleArray(this.state.topTracks.items);
-    // const topTracksShuffled = this.state.topTracksShuffled.items;
-
-    console.log(topTracksShuffled)
-    console.log(topTracksShuffled[0].name+','+
-    topTracksShuffled[1].name+','+
-    topTracksShuffled[2].name+','+
-    topTracksShuffled[3].name+','+
-    topTracksShuffled[4].name);
     axios.get(
       'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
       params:{
-        // market:"US",seed_artists:this.state.topTracks.items[0].artists[0].id,
-      // +','+
-      // this.state.topTracks.items[1].artists[0].id+','+
-      // this.state.topTracks.items[2].artists[0].id+','+
-      // this.state.topTracks.items[3].artists[0].id+','+
-      // this.state.topTracks.items[4].artists[0].id,
-      // seed_genres:this.state.topArtists.items[0].genres[0],
-      // +','+
-      // this.state.topArtists.items[1].genres[0]+','+
-      // this.state.topArtists.items[2].genres[0]+','+
-      // this.state.topArtists.items[3].genres[0]+','+
-      // this.state.topArtists.items[4].genres[0],
       seed_tracks:topTracksShuffled[0].id+','+
       topTracksShuffled[1].id+','+
       topTracksShuffled[2].id+','+
@@ -191,7 +196,6 @@ class App extends Component {
       topTracksShuffled[4].id
     }}
       ).then(res => {
-        console.log(res)
         this.setState({
           recommendations: res.data
         });
@@ -200,69 +204,43 @@ class App extends Component {
       });
   }
 
-  getCurrentlyPlaying(token) {
-    // Make a call using the token
-    axios.get(
-      'https://api.spotify.com/v1/me/player' ,{headers: { Authorization: 'Bearer '+token}}
-      ).then(res => {
-        console.log(res)
-        // this.setState({
-        //   item: res.data.item,
-        //   is_playing: res.data.is_playing,
-        //   progress_ms: res.data.progress_ms,
-        // });
-      });
-  }
-
   componentDidMount() {
     // Set token
-    this.checkToken();
-    let _token = hash.access_token;
-    if (_token) {
-      localStorage.setItem('sDate',new Date().getTime());
-      localStorage.setItem('access_token',_token);
-      console.log(_token)
+    var tokenValid = this.checkToken();
+    var _token;
+    if(tokenValid)
+      _token = localStorage.getItem('access_token');
+    else{
+      _token = hash.access_token;
+      if (_token) {
+        localStorage.setItem('sDate',new Date().getTime());
+        localStorage.setItem('access_token',_token);
+      }
+    }
+    if(_token !== undefined){
       this.getUserInfo(_token);
       this.getTopTracks(_token);
-
-      // this.getTopTracks(_token);
-      // Set token
       this.setState({
-        token: _token
+            token: _token
       });
     }
   }
 render() {
   return (
-    <div className="App">
+    <Container className="App">
       {!this.state.token &&(
-        <Button variant="contained" color="secondary" onClick={this.authUser}>
+        <button type="button" className="btn btn-primary" onClick={this.authUser}>
           Login to Spotify
-        </Button>
-        // <Button variant="contained" color="secondary" href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}>
-        // Login to Spotify
-        // </Button>
-        // <a
-        //   className="btn btn--loginApp-link"
-        //   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`}
-        // >
-        //   Login to Spotify
-        // </a>
+        </button>
       )}
       {this.state.token &&(
         <div>
-          <h3>Welcome, </h3>
-          <UserBar user={this.state.user}/><br />
-          <TopTracks topTracks={this.state.topTracks}/>
+          <UserBar user={this.state.user}/>
           <GetRecommendations recommendations={this.state.recommendations}/>
-        {/* <Player
-          item={this.state.item}
-          is_playing={this.state.is_playing}
-          progress_ms={this.progress_ms}
-        /> */}
+          <TopTracks topTracks={this.state.topTracks}/>
         </div>
       )}
-    </div>
+    </Container>
   );
   }
 }

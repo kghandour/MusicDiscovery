@@ -1,6 +1,30 @@
-.App {
-  text-align: center;
+.carousel-indicators li{ 
+  width:20px !important;
+  height:20px !important;
+  border-radius: 50%;
+  background-color: rgb(0, 255, 0) !important;
 }
+
+.card{
+  background-color: #222222 !important;
+  border-radius: 10px !important;
+  margin-top: 20px;
+}
+
+.card h1{
+  font-weight: 900;
+}
+
+a{
+  text-decoration: none !important;
+  color: white !important;
+}
+
+
+/* .App{
+  margin-top:20px;
+} */
+
 /* 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
