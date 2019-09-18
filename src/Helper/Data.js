@@ -6,6 +6,7 @@ export const  getUserInfo= async (token)=>{
         const res = await axios.get(
             'https://api.spotify.com/v1/me' ,{headers: { Authorization: 'Bearer '+token}}
         )
+        localStorage.setItem('user_info',JSON.stringify(res.data));
         return res.data;
     }else{
         return JSON.parse(user_info)
@@ -21,10 +22,11 @@ export const getTopTracks= async (token)=>{
     res = await axios.get(
       'https://api.spotify.com/v1/me/top/tracks' ,{headers: { Authorization: 'Bearer '+token}}
       )
-    }else{
-      res= JSON.parse(user_top_tracks)
-    } 
+    localStorage.setItem('user_top_tracks',JSON.stringify(res.data))
     return res.data;     
+    }else{
+      return JSON.parse(user_top_tracks)
+    } 
 }
 
 export const getTopArtists = async (token) => {
