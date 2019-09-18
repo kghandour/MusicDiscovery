@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 // import hash from "./hash";
-import axios from 'axios'
 import "./App.css";
 import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations"
 import TopTracks from "./Components/TopTracks";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Container} from 'react-bootstrap'
+import {getRecommendations, getTopTracks, getUserInfo} from './Helper/Data'
 
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
@@ -96,9 +96,6 @@ class App extends Component {
       }
     };
     this.authUser = this.authUser.bind(this);
-    this.getUserInfo = this.getUserInfo.bind(this);
-    this.getRecommendations = this.getRecommendations.bind(this);
-    this.shuffleArray = this.shuffleArray.bind(this);
     this.checkToken = this.checkToken.bind(this);
   }
 
@@ -124,87 +121,8 @@ class App extends Component {
     window.location.replace(`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`);
   }
 
-  getUserInfo(token){
-    const user_info = localStorage.getItem('user_info');
-    if(!user_info){
-      axios.get(
-        'https://api.spotify.com/v1/me' ,{headers: { Authorization: 'Bearer '+token}}
-        ).then(res => {
-          localStorage.setItem('user_info',JSON.stringify(res.data));
-          this.setState({
-            user: res.data
-          });
-        });
-    }else{
-      this.setState({
-        user: JSON.parse(user_info)
-      });
-    }
-    
-  }
 
-  getTopTracks(token){
-    const user_top_tracks = localStorage.getItem('user_top_tracks');
-    if(!user_top_tracks){
-    axios.get(
-      'https://api.spotify.com/v1/me/top/tracks' ,{headers: { Authorization: 'Bearer '+token}}
-      ).then(res => {
-        localStorage.setItem('user_top_tracks',JSON.stringify(res.data));
-        this.setState({
-          topTracks: res.data,
-        },()=>{
-          this.getRecommendations(token);
-        });
-      });
-    }else{
-      this.setState({
-        topTracks: JSON.parse(user_top_tracks)
-      },()=>{
-        this.getRecommendations(token);
-      });
-    }
-  }
-
-  getTopArtists(token){
-    axios.get(
-      'https://api.spotify.com/v1/me/top/artists' ,{headers: { Authorization: 'Bearer '+token}}
-      ).then(res => {
-        this.setState({
-          topArtists: res.data
-        });
-      });
-  }
-
-  shuffleArray(array2) {
-    const array = [...array2];
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
-  getRecommendations(token){
-    const topTracksShuffled = this.shuffleArray(this.state.topTracks.items);
-    axios.get(
-      'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
-      params:{
-      seed_tracks:topTracksShuffled[0].id+','+
-      topTracksShuffled[1].id+','+
-      topTracksShuffled[2].id+','+
-      topTracksShuffled[3].id+','+
-      topTracksShuffled[4].id
-    }}
-      ).then(res => {
-        this.setState({
-          recommendations: res.data
-        });
-      },err=>{
-        console.log(err)
-      });
-  }
-
-  componentDidMount() {
+  async componentDidMount() {
     // Set token
     var tokenValid = this.checkToken();
     var _token;
@@ -218,10 +136,20 @@ class App extends Component {
       }
     }
     if(_token !== undefined){
-      this.getUserInfo(_token);
-      this.getTopTracks(_token);
       this.setState({
-            token: _token
+        token: _token
+      });
+      const user = await getUserInfo(_token);
+      this.setState({
+        user: user,
+      });
+      const topTracks= await getTopTracks(_token);
+      this.setState({
+        topTracks: topTracks,
+      });
+      const recommendations = await getRecommendations(_token,topTracks);
+      this.setState({
+        recommendations: recommendations
       });
     }
   }

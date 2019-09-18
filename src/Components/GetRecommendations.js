@@ -3,8 +3,8 @@ import {Carousel, Card} from 'react-bootstrap'
 const GetRecommendations = props =>{
     const tracks = props.recommendations.tracks.slice(0,3);
     const listTracks = tracks.map((track)=>
-    <Carousel.Item>
-        <img className="d-block w-100" src={track.album.images[0].url}/>
+    <Carousel.Item key={track.id}>
+        <img className="d-block w-100" src={track.album.images[0].url} alt={track.name}/>
     <Carousel.Caption>
       <h3><a href={track.external_urls.spotify}>{track.name} - {track.artists[0].name}</a></h3>
     </Carousel.Caption>

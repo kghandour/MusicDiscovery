@@ -10,6 +10,7 @@ export const UserBar = props => {
             height={96}
             className="mr-3"
             src={props.user.images[0].url}
+            alt={props.user.display_name}
         />
         <Media.Body>
             <h4>Welcome,</h4>
