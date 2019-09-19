@@ -1,10 +1,11 @@
 import axios from 'axios';
+import API from '../config/API_endpoints.json'
 
 export const  getUserInfo= async (token)=>{
     const user_info = localStorage.getItem('user_info');
     if(!user_info){
         const res = await axios.get(
-            'https://api.spotify.com/v1/me' ,{headers: { Authorization: 'Bearer '+token}}
+            API.API_base + API.user_info ,{headers: { Authorization: 'Bearer '+token}}
         )
         localStorage.setItem('user_info',JSON.stringify(res.data));
         return res.data;
@@ -18,7 +19,7 @@ export const getTopTracks= async (token)=>{
     var res;
     if(!user_top_tracks){
     res = await axios.get(
-      'https://api.spotify.com/v1/me/top/tracks' ,{headers: { Authorization: 'Bearer '+token}}
+      API.API_base + API.top_tracks ,{headers: { Authorization: 'Bearer '+token}}
       )
     localStorage.setItem('user_top_tracks',JSON.stringify(res.data))
     return res.data;     
@@ -29,7 +30,7 @@ export const getTopTracks= async (token)=>{
 
 export const getTopArtists = async (token) => {
   const res = await axios.get(
-    'https://api.spotify.com/v1/me/top/artists' ,{headers: { Authorization: 'Bearer '+token}}
+    API.API_base + API.top_artists ,{headers: { Authorization: 'Bearer '+token}}
     );
     return res.data;
 }
@@ -37,7 +38,7 @@ export const getTopArtists = async (token) => {
 
 export const getRecentlyPlayed = async (token) => {
     const res = await axios.get(
-      'https://api.spotify.com/v1/me/player/recently-played' ,{headers: { Authorization: 'Bearer '+token}}
+        API.API_base + API.recently_played ,{headers: { Authorization: 'Bearer '+token}}
       );
       return res.data;
   }
@@ -45,7 +46,7 @@ export const getRecentlyPlayed = async (token) => {
 export const getRecommendations = async (token, topTracks)=>{
     const topTracksShuffled = shuffleArray(topTracks.items);
     const res = await axios.get(
-      'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
+        API.API_base + API.recommendations ,{headers: { Authorization: 'Bearer '+token},
       params:{
       seed_tracks:topTracksShuffled[0].id+','+
       topTracksShuffled[1].id+','+
@@ -60,7 +61,7 @@ export const getRecommendations = async (token, topTracks)=>{
 export const getRecommendationsRecentlyPlayed = async (token, topTracks)=>{
     const topTracksShuffled = shuffleArray(topTracks.items);
     const res = await axios.get(
-      'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
+        API.API_base + API.recommendations,{headers: { Authorization: 'Bearer '+token},
       params:{
       seed_tracks:topTracksShuffled[0].track.id+','+
       topTracksShuffled[1].track.id+','+

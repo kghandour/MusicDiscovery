@@ -2,5 +2,7 @@
     "API_base":"https://api.spotify.com/v1/",
     "top_tracks":"me/top/tracks",
     "top_artists":"me/top/artists",
-    "recommendations":"recommendations"
+    "user_info":"me",
+    "recommendations":"recommendations",
+    "recently_played":"me/player/recently-played"
 }
