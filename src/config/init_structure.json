@@ -1,99 +1,99 @@
 {   "token": null,
-      "user": {
+    "user": {
         "display_name": "",
         "external_urls": {},
         "images":[{"url":""}]
-      },
-      "topTracks":{
+    },
+    "topTracks":{
         "items": [{
-          "track":{
+            "track":{
             "artists":[{
-              "id":"",
-              "name":""
+                "id":"",
+                "name":""
             }],
             "id": "",
             "external_urls":{},
             "genres":[],
             "name":""
-          }
+            }
         }]
-      },
-      "recentlyPlayed":{
+    },
+    "recentlyPlayed":{
         "items": [{
-          "artists":[{
+            "artists":[{
             "id":"",
             "name":""
-          }],
-          "id": "",
-          "external_urls":{},
-          "genres":[],
-          "name":""
+            }],
+            "id": "",
+            "external_urls":{},
+            "genres":[],
+            "name":""
         }]
-      },
-      
-      "topArtists":{
+    },
+    
+    "topArtists":{
         "items": [{
-          "id": "",
-          "external_urls":{},
-          "genres":[],
-          "name":""
+            "id": "",
+            "external_urls":{},
+            "genres":[],
+            "name":""
         }]
-      },
-      "recommendations":{
+    },
+    "recommendations":{
         "tracks":[{
-          "album":{
+            "album":{
             "images":[{
-              "height":"",
-              "url":"",
-              "width":""
+                "height":"",
+                "url":"",
+                "width":""
             }]
-          },
-          "artists":[{
+            },
+            "artists":[{
             "external_urls":{},
             "id":"",
             "name":""
-          }],
-          "external_urls":{},
-          "id":"",
-          "name":""
-
-        }]
-      },
-      "recommendationsRecentlyPlayed":{
-        "tracks":[{
-          "album":{
-            "images":[{
-              "height":"",
-              "url":"",
-              "width":""
-            }]
-          },
-          "artists":[{
+            }],
             "external_urls":{},
             "id":"",
             "name":""
-          }],
-          "external_urls":{},
-          "id":"",
-          "name":""
 
         }]
-      },
-      "player":{
+    },
+    "recommendationsRecentlyPlayed":{
+        "tracks":[{
+            "album":{
+            "images":[{
+                "height":"",
+                "url":"",
+                "width":""
+            }]
+            },
+            "artists":[{
+            "external_urls":{},
+            "id":"",
+            "name":""
+            }],
+            "external_urls":{},
+            "id":"",
+            "name":""
+
+        }]
+    },
+    "player":{
         "item": {
-          "album": {
+            "album": {
             "images": [{ "url": "" }]
-          },
-          "name": "",
-          "artists": [{ "name": "" }],
-          "duration_ms":0 
+            },
+            "name": "",
+            "artists": [{ "name": "" }],
+            "duration_ms":0 
         },
         "is_playing": "Paused",
         "progress_ms": 0
-      },
-      "isLoadingUser": true,
-      "isLoadingTopTracks":true,
-      "isLoadingRecommendations": true,
-      "isLoadingRecentlyPlayed": true,
-      "isLoadingRecommendationsRecentlyPlayed": true
-    }
+    },
+    "isLoadingUser": true,
+    "isLoadingTopTracks":true,
+    "isLoadingRecommendations": true,
+    "isLoadingRecentlyPlayed": true,
+    "isLoadingRecommendationsRecentlyPlayed": true
+}
