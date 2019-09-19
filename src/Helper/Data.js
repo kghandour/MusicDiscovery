@@ -62,6 +62,8 @@ export const getRecommendations = async (token, topTracks)=>{
       seed_tracks:parameterString
     }});
 
+    console.log(res.data)
+
     return res.data;
 }
 
