@@ -13,8 +13,6 @@ export const  getUserInfo= async (token)=>{
     }
 }
 
-
-
 export const getTopTracks= async (token)=>{
     const user_top_tracks = localStorage.getItem('user_top_tracks');
     var res;
@@ -36,6 +34,14 @@ export const getTopArtists = async (token) => {
     return res.data;
 }
 
+
+export const getRecentlyPlayed = async (token) => {
+    const res = await axios.get(
+      'https://api.spotify.com/v1/me/player/recently-played' ,{headers: { Authorization: 'Bearer '+token}}
+      );
+      return res.data;
+  }
+
 export const getRecommendations = async (token, topTracks)=>{
     const topTracksShuffled = shuffleArray(topTracks.items);
     const res = await axios.get(
@@ -46,6 +52,21 @@ export const getRecommendations = async (token, topTracks)=>{
       topTracksShuffled[2].id+','+
       topTracksShuffled[3].id+','+
       topTracksShuffled[4].id
+    }});
+
+    return res.data;
+}
+
+export const getRecommendationsRecentlyPlayed = async (token, topTracks)=>{
+    const topTracksShuffled = shuffleArray(topTracks.items);
+    const res = await axios.get(
+      'https://api.spotify.com/v1/recommendations',{headers: { Authorization: 'Bearer '+token},
+      params:{
+      seed_tracks:topTracksShuffled[0].track.id+','+
+      topTracksShuffled[1].track.id+','+
+      topTracksShuffled[2].track.id+','+
+      topTracksShuffled[3].track.id+','+
+      topTracksShuffled[4].track.id
     }});
 
     return res.data;

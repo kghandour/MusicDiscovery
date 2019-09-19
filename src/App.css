@@ -20,6 +20,10 @@ a{
   color: white !important;
 }
 
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+  background-color: rgb(0, 109, 0) !important;
+}
+
 
 /* .App{
   margin-top:20px;

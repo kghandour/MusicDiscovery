@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import "./App.css";
 import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations"
-import TopTracks from "./Components/TopTracks";
+import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import 'bootstrap/dist/css/bootstrap.css'
-import {Container} from 'react-bootstrap'
-import {getRecommendations, getTopTracks, getUserInfo} from './Helper/Data'
+import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
+import {getRecommendations, getRecommendationsRecentlyPlayed, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
 
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
@@ -17,7 +17,8 @@ const scopes = [
   "user-top-read",
   "user-read-currently-playing",
   "user-read-playback-state",
-  "user-library-read"
+  "user-library-read",
+  "user-read-recently-played"
 ];
 // Get the hash of the url
 const hash = window.location.hash
@@ -42,6 +43,20 @@ class App extends Component {
         images:[{url:""}]
       },
       topTracks:{
+        items: [{
+          track:{
+            artists:[{
+              id:"",
+              name:""
+            }],
+            id: "",
+            external_urls:{},
+            genres:[],
+            name:""
+          }
+        }]
+      },
+      recentlyPlayed:{
         items: [{
           artists:[{
             id:"",
@@ -82,6 +97,26 @@ class App extends Component {
 
         }]
       },
+      recommendationsRecentlyPlayed:{
+        tracks:[{
+          album:{
+            images:[{
+              height:"",
+              url:"",
+              width:"",
+            }]
+          },
+          artists:[{
+            external_urls:{},
+            id:"",
+            name:""
+          }],
+          external_urls:{},
+          id:"",
+          name:"",
+
+        }]
+      },
       player:{
         item: {
           album: {
@@ -93,7 +128,12 @@ class App extends Component {
         },
         is_playing: "Paused",
         progress_ms: 0
-      }
+      },
+      isLoadingUser: true,
+      isLoadingTopTracks:true,
+      isLoadingRecommendations: true,
+      isLoadingRecentlyPlayed: true,
+      isLoadingRecommendationsRecentlyPlayed: true,
     };
     this.authUser = this.authUser.bind(this);
     this.checkToken = this.checkToken.bind(this);
@@ -142,15 +182,29 @@ class App extends Component {
       const user = await getUserInfo(_token);
       this.setState({
         user: user,
+        isLoadingUser: false
       });
       const topTracks= await getTopTracks(_token);
       this.setState({
         topTracks: topTracks,
+        isLoadingTopTracks: false
       });
       const recommendations = await getRecommendations(_token,topTracks);
       this.setState({
-        recommendations: recommendations
+        recommendations: recommendations,
+        isLoadingRecommendations: false
       });
+      const recentlyPlayed = await getRecentlyPlayed(_token);
+      this.setState({
+        recentlyPlayed: recentlyPlayed,
+        isLoadingRecentlyPlayed: false
+      });
+      const recommendationsRecentlyPlayed = await getRecommendationsRecentlyPlayed(_token, recentlyPlayed);
+
+      this.setState({
+        recommendationsRecentlyPlayed: recommendationsRecentlyPlayed,
+        isLoadingRecommendationsRecentlyPlayed: false
+      })
     }
   }
 render() {
@@ -163,9 +217,28 @@ render() {
       )}
       {this.state.token &&(
         <div>
-          <UserBar user={this.state.user}/>
-          <GetRecommendations recommendations={this.state.recommendations}/>
-          <TopTracks topTracks={this.state.topTracks}/>
+          {this.state.isLoadingUser ? 
+            <Spinner animation="border" variant="success" /> : 
+            <UserBar user={this.state.user}/>}
+          <Tabs defaultActiveKey="topTracks" id="uncontrolled-tab-example">
+            <Tab eventKey="topTracks" title="Top Tracks">
+              {this.state.isLoadingRecommendations ?
+              <Spinner animation="border" variant="success" /> :
+              <GetRecommendations recommendations={this.state.recommendations}/>}
+              {this.state.isLoadingTopTracks ? 
+              <Spinner animation="border" variant="success" />:
+              <TopTracks topTracks={this.state.topTracks}/>}
+            </Tab>
+            <Tab eventKey="recentlyPlayed" title="Recently Played">
+              {this.state.isLoadingRecommendationsRecentlyPlayed ?
+              <Spinner animation="border" variant="success" /> :
+              <GetRecommendations recommendations={this.state.recommendationsRecentlyPlayed}/>}
+              {this.state.isLoadingRecentlyPlayed ? 
+              <Spinner animation="border" variant="success" />:
+              <RecentlyPlayed topTracks={this.state.recentlyPlayed}/>}
+            </Tab>
+          </Tabs>
+          
         </div>
       )}
     </Container>

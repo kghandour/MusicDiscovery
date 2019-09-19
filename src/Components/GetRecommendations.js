@@ -1,6 +1,6 @@
 import React from 'react'
 import {Carousel, Card} from 'react-bootstrap'
-const GetRecommendations = props =>{
+export const GetRecommendations = props =>{
     const tracks = props.recommendations.tracks.slice(0,3);
     const listTracks = tracks.map((track)=>
     <Carousel.Item key={track.id}>
