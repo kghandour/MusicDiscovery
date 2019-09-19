@@ -6,7 +6,7 @@ export const GetRecommendations = props =>{
     <Carousel.Item key={track.id}>
         <img className="d-block w-100" src={track.album.images[0].url} alt={track.name}/>
     <Carousel.Caption>
-      <h3><a href={track.external_urls.spotify}>{track.name} - {track.artists[0].name}</a></h3>
+      <h3><a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">{track.name} - {track.artists[0].name}</a></h3>
     </Carousel.Caption>
   </Carousel.Item>
     );

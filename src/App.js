@@ -220,6 +220,7 @@ render() {
           {this.state.isLoadingUser ? 
             <Spinner animation="border" variant="success" /> : 
             <UserBar user={this.state.user}/>}
+          <h4>Get Recommendations based on:</h4>
           <Tabs defaultActiveKey="topTracks" id="uncontrolled-tab-example">
             <Tab eventKey="topTracks" title="Top Tracks">
               {this.state.isLoadingRecommendations ?
