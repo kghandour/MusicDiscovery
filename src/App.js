@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
 import authentication from './config/authentication.json'
+import initStructure from './config/init_structure.json'
 
 // Get the hash of the url
 const hash = window.location.hash
@@ -24,106 +25,7 @@ window.location.hash = "";
 class App extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      token: null,
-      user: {
-        display_name: "",
-        external_urls: {},
-        images:[{url:""}]
-      },
-      topTracks:{
-        items: [{
-          track:{
-            artists:[{
-              id:"",
-              name:""
-            }],
-            id: "",
-            external_urls:{},
-            genres:[],
-            name:""
-          }
-        }]
-      },
-      recentlyPlayed:{
-        items: [{
-          artists:[{
-            id:"",
-            name:""
-          }],
-          id: "",
-          external_urls:{},
-          genres:[],
-          name:""
-        }]
-      },
-      
-      topArtists:{
-        items: [{
-          id: "",
-          external_urls:{},
-          genres:[],
-          name:""
-        }]
-      },
-      recommendations:{
-        tracks:[{
-          album:{
-            images:[{
-              height:"",
-              url:"",
-              width:"",
-            }]
-          },
-          artists:[{
-            external_urls:{},
-            id:"",
-            name:""
-          }],
-          external_urls:{},
-          id:"",
-          name:"",
-
-        }]
-      },
-      recommendationsRecentlyPlayed:{
-        tracks:[{
-          album:{
-            images:[{
-              height:"",
-              url:"",
-              width:"",
-            }]
-          },
-          artists:[{
-            external_urls:{},
-            id:"",
-            name:""
-          }],
-          external_urls:{},
-          id:"",
-          name:"",
-
-        }]
-      },
-      player:{
-        item: {
-          album: {
-            images: [{ url: "" }]
-          },
-          name: "",
-          artists: [{ name: "" }],
-          duration_ms:0,
-        },
-        is_playing: "Paused",
-        progress_ms: 0
-      },
-      isLoadingUser: true,
-      isLoadingTopTracks:true,
-      isLoadingRecommendations: true,
-      isLoadingRecentlyPlayed: true,
-      isLoadingRecommendationsRecentlyPlayed: true,
-    };
+    this.state = initStructure;
     this.authUser = this.authUser.bind(this);
     this.checkToken = this.checkToken.bind(this);
   }

@@ -1,0 +1,99 @@
+{   "token": null,
+      "user": {
+        "display_name": "",
+        "external_urls": {},
+        "images":[{"url":""}]
+      },
+      "topTracks":{
+        "items": [{
+          "track":{
+            "artists":[{
+              "id":"",
+              "name":""
+            }],
+            "id": "",
+            "external_urls":{},
+            "genres":[],
+            "name":""
+          }
+        }]
+      },
+      "recentlyPlayed":{
+        "items": [{
+          "artists":[{
+            "id":"",
+            "name":""
+          }],
+          "id": "",
+          "external_urls":{},
+          "genres":[],
+          "name":""
+        }]
+      },
+      
+      "topArtists":{
+        "items": [{
+          "id": "",
+          "external_urls":{},
+          "genres":[],
+          "name":""
+        }]
+      },
+      "recommendations":{
+        "tracks":[{
+          "album":{
+            "images":[{
+              "height":"",
+              "url":"",
+              "width":""
+            }]
+          },
+          "artists":[{
+            "external_urls":{},
+            "id":"",
+            "name":""
+          }],
+          "external_urls":{},
+          "id":"",
+          "name":""
+
+        }]
+      },
+      "recommendationsRecentlyPlayed":{
+        "tracks":[{
+          "album":{
+            "images":[{
+              "height":"",
+              "url":"",
+              "width":""
+            }]
+          },
+          "artists":[{
+            "external_urls":{},
+            "id":"",
+            "name":""
+          }],
+          "external_urls":{},
+          "id":"",
+          "name":""
+
+        }]
+      },
+      "player":{
+        "item": {
+          "album": {
+            "images": [{ "url": "" }]
+          },
+          "name": "",
+          "artists": [{ "name": "" }],
+          "duration_ms":0 
+        },
+        "is_playing": "Paused",
+        "progress_ms": 0
+      },
+      "isLoadingUser": true,
+      "isLoadingTopTracks":true,
+      "isLoadingRecommendations": true,
+      "isLoadingRecentlyPlayed": true,
+      "isLoadingRecommendationsRecentlyPlayed": true
+    }
