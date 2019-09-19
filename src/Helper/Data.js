@@ -40,34 +40,46 @@ export const getRecentlyPlayed = async (token) => {
     const res = await axios.get(
         API.API_base + API.recently_played ,{headers: { Authorization: 'Bearer '+token}}
       );
+      res.data.items = res.data.items.filter((elem, index, self) => self.findIndex(
+        (t) => {return (t.track.id === elem.track.id)}) === index)
       return res.data;
   }
 
 export const getRecommendations = async (token, topTracks)=>{
     const topTracksShuffled = shuffleArray(topTracks.items);
+    var parameterString = "";
+    var upperLimit=4;
+    var x=0;
+    if(topTracksShuffled.length<5)
+      upperLimit = topTracksShuffled.length-1;
+    for(x=0;x<upperLimit;x++){
+      parameterString += topTracksShuffled[x].id+','
+    }
+    parameterString += topTracksShuffled[x].id;
     const res = await axios.get(
         API.API_base + API.recommendations ,{headers: { Authorization: 'Bearer '+token},
       params:{
-      seed_tracks:topTracksShuffled[0].id+','+
-      topTracksShuffled[1].id+','+
-      topTracksShuffled[2].id+','+
-      topTracksShuffled[3].id+','+
-      topTracksShuffled[4].id
+      seed_tracks:parameterString
     }});
 
     return res.data;
 }
 
 export const getRecommendationsRecentlyPlayed = async (token, topTracks)=>{
-    const topTracksShuffled = shuffleArray(topTracks.items);
+    // const topTracksShuffled = shuffleArray(topTracks.items);
+    var parameterString = "";
+    var upperLimit=4;
+    var x=0;
+    if(topTracks.items.length<5)
+      upperLimit = topTracks.items.length-1;
+    for(x=0;x<upperLimit;x++){
+      parameterString += topTracks.items[x].track.id+','
+    }
+    parameterString += topTracks.items[x].track.id
     const res = await axios.get(
         API.API_base + API.recommendations,{headers: { Authorization: 'Bearer '+token},
       params:{
-      seed_tracks:topTracksShuffled[0].track.id+','+
-      topTracksShuffled[1].track.id+','+
-      topTracksShuffled[2].track.id+','+
-      topTracksShuffled[3].track.id+','+
-      topTracksShuffled[4].track.id
+      seed_tracks: parameterString
     }});
 
     return res.data;
