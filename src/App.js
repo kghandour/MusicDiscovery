@@ -7,19 +7,8 @@ import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
+import authentication from './config/authentication.json'
 
-
-export const authEndpoint = 'https://accounts.spotify.com/authorize';
-// Replace with your app's client ID, redirect URI and desired scopes
-const clientId = "2badfb5ce5af4cf3840edb1968683fdf";
-const redirectUri = "http://localhost:3000";
-const scopes = [
-  "user-top-read",
-  "user-read-currently-playing",
-  "user-read-playback-state",
-  "user-library-read",
-  "user-read-recently-played"
-];
 // Get the hash of the url
 const hash = window.location.hash
   .substring(1)
@@ -145,7 +134,6 @@ class App extends Component {
     const expDuration = 3600*1000;
     const notAccepted = startTime === undefined;
     const isExpired = startTime !== undefined && (currentTime - startTime) >expDuration;
-    console.log("Testing token: "+startTime+" Curr time: "+currentTime+" Diff: "+ (currentTime-startTime))
     if( notAccepted || isExpired){
       localStorage.removeItem('sDate');
       localStorage.removeItem('access_token');
@@ -158,7 +146,7 @@ class App extends Component {
   }
 
   authUser(){
-    window.location.replace(`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token`);
+    window.location.replace(`${authentication.endpoint}?client_id=${authentication.clientId}&redirect_uri=${authentication.redirectUri}&scope=${authentication.scopes.join("%20")}&response_type=token`);
   }
 
 

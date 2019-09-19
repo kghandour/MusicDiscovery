@@ -1,11 +1,12 @@
 {
     "endpoint" : "https://accounts.spotify.com/authorize",
-    "clientID":"2badfb5ce5af4cf3840edb1968683fdf",
-    "redirectURI":"http://localhost:3000",
+    "clientId":"2badfb5ce5af4cf3840edb1968683fdf",
+    "redirectUri":"http://localhost:3000",
     "scopes" : [
         "user-top-read",
         "user-read-currently-playing",
         "user-read-playback-state",
-        "user-library-read"
+        "user-library-read",
+        "user-read-recently-played"
     ]
 }
