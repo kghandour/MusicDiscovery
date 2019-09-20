@@ -4,6 +4,7 @@ import "./App.css";
 import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations"
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
+import {Navigation, Footer} from './Components/Navigation'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
@@ -109,18 +110,17 @@ class App extends Component {
   }
 render() {
   return (
-    <Container className="App">
+    <span>
+    <Navigation user={this.state.user}/>
       {!this.state.token &&(
         <button type="button" className="btn btn-primary" onClick={this.authUser}>
           Login to Spotify
         </button>
       )}
+    <Container className="App">
+      
       {this.state.token &&(
-        <div>
-          {this.state.isLoadingUser ? 
-            <Spinner animation="border" variant="success" /> : 
-            <UserBar user={this.state.user}/>}
-          <h4>Get Recommendations based on:</h4>
+        <div className="contentDiv">
           <Tabs defaultActiveKey="topTracks" id="uncontrolled-tab-example">
             <Tab eventKey="topTracks" title="Top Tracks">
               {this.state.isLoadingRecommendations ?
@@ -147,11 +147,11 @@ render() {
               <RecentlyPlayed topTracks={this.state.savedTracks}/>}
             </Tab>
           </Tabs>
-          
-          
         </div>
       )}
     </Container>
+    <Footer user={this.state.user}/>
+    </span>
   );
   }
 }

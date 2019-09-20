@@ -14,6 +14,11 @@ export const  getUserInfo= async (token)=>{
     }
 }
 
+export function signOut(){
+  localStorage.clear();
+  window.location.reload();
+}
+
 export const getTopTracks= async (token)=>{
     const user_top_tracks = localStorage.getItem('user_top_tracks');
     var res;

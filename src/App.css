@@ -37,6 +37,23 @@ a{
   background-color: rgb(50, 50, 50);
 }
 
+.card-subtitle{
+  padding-bottom: 20px;
+}
+
+.nav-tabs{
+  border: 0 !important;
+}
+
+.nav-link.active{
+  border: 0 !important;
+  /* border-radius: 25% !important; */
+}
+
+.contentDiv{
+  margin-top: 10px;
+}
+
 
 /* .App{
   margin-top:20px;
