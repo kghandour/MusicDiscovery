@@ -6,7 +6,7 @@ import GetRecommendations from "./Components/GetRecommendations"
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import {Navigation, Footer} from './Components/Navigation'
 import 'bootstrap/dist/css/bootstrap.css'
-import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
+import {Container, Spinner, Tabs, Tab, Button, Jumbotron} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
 import authentication from './config/authentication.json'
 import initStructure from './config/init_structure.json'
@@ -112,13 +112,24 @@ render() {
   return (
     <span>
     <Navigation user={this.state.user}/>
+    <Container className="App">
       {!this.state.token &&(
+        <div>
+        <Jumbotron>
+          <h1>Hello, world!</h1>
+          <p>
+            This is a simple hero unit, a simple jumbotron-style component for calling
+            extra attention to featured content or information.
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
         <button type="button" className="btn btn-primary" onClick={this.authUser}>
           Login to Spotify
         </button>
+        </div>
       )}
-    <Container className="App">
-      
       {this.state.token &&(
         <div className="contentDiv">
           <Tabs defaultActiveKey="topTracks" id="uncontrolled-tab-example">
@@ -128,7 +139,7 @@ render() {
               <GetRecommendations recommendations={this.state.recommendations}/>}
               {this.state.isLoadingTopTracks ? 
               <Spinner animation="border" variant="success" />:
-              <TopTracks topTracks={this.state.topTracks}/>}
+              <TopTracks topTracks={this.state.topTracks} title="View your top liked tracks"/>}
             </Tab>
             <Tab eventKey="recentlyPlayed" title="Recently Played">
               {this.state.isLoadingRecommendationsRecentlyPlayed ?
@@ -136,7 +147,7 @@ render() {
               <GetRecommendations recommendations={this.state.recommendationsRecentlyPlayed}/>}
               {this.state.isLoadingRecentlyPlayed ? 
               <Spinner animation="border" variant="success" />:
-              <RecentlyPlayed topTracks={this.state.recentlyPlayed}/>}
+              <RecentlyPlayed topTracks={this.state.recentlyPlayed} title="View your recently played tracks"/>}
             </Tab>
             <Tab eventKey="savedTracks" title="Saved Tracks">
               {this.state.isLoadingRecommendationsSavedTracks ?
@@ -144,7 +155,7 @@ render() {
               <GetRecommendations recommendations={this.state.recommendationsSavedTracks}/>}
               {this.state.isLoadingSavedTracks ? 
               <Spinner animation="border" variant="success" />:
-              <RecentlyPlayed topTracks={this.state.savedTracks}/>}
+              <RecentlyPlayed topTracks={this.state.savedTracks} title="View your recently liked tracks"/>}
             </Tab>
           </Tabs>
         </div>

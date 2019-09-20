@@ -10,7 +10,7 @@ export const TopTracks = props => {
         <Accordion>
         <Card >
         <Accordion.Toggle as={Card.Header} eventKey="0">
-        View your tracks
+        <h4>{props.title}</h4>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
         <Card.Body>
@@ -31,7 +31,7 @@ export const RecentlyPlayed = props => {
         <Accordion>
         <Card >
         <Accordion.Toggle as={Card.Header} eventKey="0">
-        View your tracks
+        <h4>{props.title}</h4>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
         <Card.Body>

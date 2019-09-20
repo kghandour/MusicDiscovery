@@ -63,6 +63,10 @@ a{
   background-color: #111111 !important;
 }
 
+.footer.navbar{
+  margin-top: 20px;
+}
+
 .greenNavButton.nav-link{
   color: #1DB954 !important;
 }
