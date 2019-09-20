@@ -20,8 +20,8 @@ export const Navigation = props=>{
             props.user !== undefined && props.user.display_name!== '' && (
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
-            <Nav.Link href={props.user.external_urls.spotify} target="_blank">
-                {props.user.display_name.split(" ")[0]}
+            <Nav.Link href={props.user.external_urls.spotify} target="_blank" className="greenNavButton">
+                <b>{props.user.display_name.split(" ")[0]}</b>
             </Nav.Link>
             <Nav.Link onClick={signOut}>Sign out</Nav.Link>
             </Navbar.Collapse>
@@ -33,26 +33,24 @@ export const Navigation = props=>{
     );
 };
 
+const FooterItems = props=>{
+    return(
+        <Nav md="auto">
+            <Nav.Item>
+                Suggestions For Spotify is an open-source project developed by <a href="https://kghandour.com">Karim ElGhandour</a>
+            </Nav.Item>
+        </Nav>
+    );
+}
+
 export const Footer = props =>{
     return(
         (props.user !== undefined && props.user.display_name!== '') ?
-        (<Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                    Signed in as: <a href="#login">Mark Otto</a>
-                </Navbar.Text>
-            </Navbar.Collapse>
+        (<Navbar bg="dark" variant="dark" className="justify-content-md-center footer">
+            <FooterItems/>
         </Navbar>) :
-        (<Navbar bg="dark" variant="dark" fixed="bottom">
-            <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                    Signed in as: <a href="#login">Mark Otto</a>
-                </Navbar.Text>
-            </Navbar.Collapse>
+        (<Navbar bg="dark" variant="dark" fixed="bottom" className="justify-content-md-center footer">
+            <FooterItems/>
         </Navbar>)
     );
 }

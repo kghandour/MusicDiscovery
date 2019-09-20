@@ -30,7 +30,7 @@ export const GetRecommendations = props =>{
     return(
         <Card >
         <Card.Body>
-        <h4>Recommended Tracks:</h4>
+        <h4>Recommended Tracks</h4>
         <CardDeck>
         {listTracks}
         </CardDeck>

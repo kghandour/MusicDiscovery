@@ -20,8 +20,8 @@ a{
   color: white !important;
 }
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
-  background-color: rgb(0, 109, 0) !important;
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link .greenNavButton{
+  background-color: #1DB954 !important;
 }
 
 .recommendationCard:hover{
@@ -47,11 +47,24 @@ a{
 
 .nav-link.active{
   border: 0 !important;
-  /* border-radius: 25% !important; */
+  border-radius: 20px !important;
+}
+
+.nav-link:hover{
+  border-radius: 20px !important;
 }
 
 .contentDiv{
-  margin-top: 10px;
+  margin-top: 20px;
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark.sticky-top, .footer.navbar{
+  padding:10px 0;
+  background-color: #111111 !important;
+}
+
+.greenNavButton.nav-link{
+  color: #1DB954 !important;
 }
 
 

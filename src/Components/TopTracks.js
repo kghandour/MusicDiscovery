@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card} from 'react-bootstrap'
+import {Card, Accordion, Button} from 'react-bootstrap'
 
 export const TopTracks = props => {
     const tracks = props.topTracks.items;
@@ -7,11 +7,18 @@ export const TopTracks = props => {
         <li key={track.id}><a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">{track.name} - {track.artists[0].name}</a></li>
     );
     return(
+        <Accordion>
         <Card >
+        <Accordion.Toggle as={Card.Header} eventKey="0">
+        View your tracks
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey="0">
         <Card.Body>
         <ol>{listTracks}</ol>
         </Card.Body>
+        </Accordion.Collapse>
         </Card>
+        </Accordion>
     );
 }
 
@@ -21,10 +28,17 @@ export const RecentlyPlayed = props => {
         <li key={track.track.id+index}><a href={track.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">{track.track.name} - {track.track.artists[0].name}</a></li>
     );
     return(
+        <Accordion>
         <Card >
+        <Accordion.Toggle as={Card.Header} eventKey="0">
+        View your tracks
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey="0">
         <Card.Body>
         <ol>{listTracks}</ol>
         </Card.Body>
+        </Accordion.Collapse>
         </Card>
+        </Accordion>
     );
 }
