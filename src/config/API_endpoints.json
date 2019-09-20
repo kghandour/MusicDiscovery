@@ -4,5 +4,6 @@
     "top_artists":"me/top/artists",
     "user_info":"me",
     "recommendations":"recommendations",
-    "recently_played":"me/player/recently-played"
+    "recently_played":"me/player/recently-played",
+    "saved_tracks":"me/tracks"
 }

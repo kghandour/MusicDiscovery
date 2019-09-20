@@ -18,6 +18,20 @@
             }
         }]
     },
+    "savedTracks":{
+        "items": [{
+            "track":{
+            "artists":[{
+                "id":"",
+                "name":""
+            }],
+            "id": "",
+            "external_urls":{},
+            "genres":[],
+            "name":""
+            }
+        }]
+    },
     "recentlyPlayed":{
         "items": [{
             "artists":[{
@@ -79,6 +93,26 @@
 
         }]
     },
+    "recommendationsSavedTracks":{
+        "tracks":[{
+            "album":{
+            "images":[{
+                "height":"",
+                "url":"",
+                "width":""
+            }]
+            },
+            "artists":[{
+            "external_urls":{},
+            "id":"",
+            "name":""
+            }],
+            "external_urls":{},
+            "id":"",
+            "name":""
+
+        }]
+    },
     "player":{
         "item": {
             "album": {
@@ -95,5 +129,8 @@
     "isLoadingTopTracks":true,
     "isLoadingRecommendations": true,
     "isLoadingRecentlyPlayed": true,
-    "isLoadingRecommendationsRecentlyPlayed": true
+    "isLoadingRecommendationsRecentlyPlayed": true,
+    "isLoadingSavedTracks":true,
+    "isLoadingRecommendationsSavedTracks": true
+
 }

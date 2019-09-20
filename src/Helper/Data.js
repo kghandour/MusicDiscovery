@@ -28,6 +28,13 @@ export const getTopTracks= async (token)=>{
     } 
 }
 
+export const getSavedTracks= async (token)=>{
+  const res = await axios.get(
+    API.API_base + API.saved_tracks ,{headers: { Authorization: 'Bearer '+token}}
+    );
+    return res.data;
+}
+
 export const getTopArtists = async (token) => {
   const res = await axios.get(
     API.API_base + API.top_artists ,{headers: { Authorization: 'Bearer '+token}}

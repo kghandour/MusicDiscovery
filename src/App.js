@@ -6,7 +6,7 @@ import GetRecommendations from "./Components/GetRecommendations"
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
-import {getRecommendations, getRecommendationsRecentlyPlayed, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
+import {getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
 import authentication from './config/authentication.json'
 import initStructure from './config/init_structure.json'
 
@@ -95,6 +95,16 @@ class App extends Component {
         recommendationsRecentlyPlayed: recommendationsRecentlyPlayed,
         isLoadingRecommendationsRecentlyPlayed: false
       })
+      const savedTracks= await getSavedTracks(_token);
+      this.setState({
+        savedTracks: savedTracks,
+        isLoadingSavedTracks: false
+      });
+      const recommendationsSavedTracks = await getRecommendationsRecentlyPlayed(_token,savedTracks);
+      this.setState({
+        recommendationsSavedTracks: recommendationsSavedTracks,
+        isLoadingRecommendationsSavedTracks: false
+      });
     }
   }
 render() {
@@ -128,7 +138,16 @@ render() {
               <Spinner animation="border" variant="success" />:
               <RecentlyPlayed topTracks={this.state.recentlyPlayed}/>}
             </Tab>
+            <Tab eventKey="savedTracks" title="Saved Tracks">
+              {this.state.isLoadingRecommendationsSavedTracks ?
+              <Spinner animation="border" variant="success" /> :
+              <GetRecommendations recommendations={this.state.recommendationsSavedTracks}/>}
+              {this.state.isLoadingSavedTracks ? 
+              <Spinner animation="border" variant="success" />:
+              <RecentlyPlayed topTracks={this.state.savedTracks}/>}
+            </Tab>
           </Tabs>
+          
           
         </div>
       )}
