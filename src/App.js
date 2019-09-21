@@ -6,7 +6,7 @@ import GetRecommendations from "./Components/GetRecommendations"
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import {Navigation, Footer} from './Components/Navigation'
 import 'bootstrap/dist/css/bootstrap.css'
-import {Container, Spinner, Tabs, Tab, Button, Jumbotron} from 'react-bootstrap'
+import {Container, Spinner, Tabs, Tab, Button, Jumbotron, Card, Accordion} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
 import authentication from './config/authentication.json'
 import initStructure from './config/init_structure.json'
@@ -116,18 +116,32 @@ render() {
       {!this.state.token &&(
         <div>
         <Jumbotron>
-          <h1>Hello, world!</h1>
+          <h1>Suggestions For Spotify</h1>
           <p>
-            This is a simple hero unit, a simple jumbotron-style component for calling
-            extra attention to featured content or information.
+            For all music enthusiasts! Use your Spotify library to discover new songs daily!
           </p>
+          New algorithms and criteria are provided with new ones on the way to fit all your moods.
           <p>
-            <Button variant="primary">Learn more</Button>
+            <Button variant="success" onClick={this.authUser}>Login to Spotify</Button>
           </p>
         </Jumbotron>
-        <button type="button" className="btn btn-primary" onClick={this.authUser}>
-          Login to Spotify
-        </button>
+        <Accordion>
+        <Card >
+        <Accordion.Toggle as={Card.Header} eventKey="0">
+        Permissions required
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey="0">
+        <Card.Body>
+        "user-top-read":<br />
+        Retrieves the user top liked tracks. It is one of the algorithms used to provide recommendations. <br />
+        "user-library-read": <br />
+        Retrieves the user saved tracks.  <br />
+        "user-read-recently-played"<br />
+        Retrieves the list of recently played tracks.<br />
+        </Card.Body>
+        </Accordion.Collapse>
+        </Card>
+        </Accordion>
         </div>
       )}
       {this.state.token &&(

@@ -71,6 +71,21 @@ a{
   color: #1DB954 !important;
 }
 
+.jumbotron{
+  background: rgb(25,20,20);
+  background: linear-gradient(0deg, rgba(25,20,20,1) 0%, rgba(29,185,84,1) 100%);
+  text-align: center;
+}
+
+.jumbotron h1{
+  font-size: 4rem;
+}
+
+.jumbotron p{
+  font-size: 2.5rem;
+
+}
+
 
 /* .App{
   margin-top:20px;
