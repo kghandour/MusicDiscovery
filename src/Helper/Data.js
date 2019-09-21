@@ -1,5 +1,6 @@
 import axios from 'axios';
 import API from '../config/API_endpoints.json'
+import authentication from '../config/authentication'
 
 export const  getUserInfo= async (token)=>{
     const user_info = localStorage.getItem('user_info');
@@ -99,6 +100,10 @@ export const getRecommendationsRecentlyPlayed = async (token, topTracks)=>{
     return res.data;
 }
 
+export function authUser(){
+  window.location.replace(`${authentication.endpoint}?client_id=${authentication.clientId}&redirect_uri=${authentication.redirectUri}&scope=${authentication.scopes.join("%20")}&response_type=token`);
+}
+
 function shuffleArray(array2) {
     const array = [...array2];
     for (let i = array.length - 1; i > 0; i--) {
@@ -107,3 +112,5 @@ function shuffleArray(array2) {
     }
     return array;
   }
+
+

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 // import hash from "./hash";
 import "./App.css";
 import {UserBar} from "./Components/UserProfile"
-import GetRecommendations from "./Components/GetRecommendations"
+import GetRecommendations from "./Components/GetRecommendations";
+import {NotLoggedIn} from './Components/NotLoggedIn';
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import {Navigation, Footer} from './Components/Navigation'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -27,7 +28,6 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = initStructure;
-    this.authUser = this.authUser.bind(this);
     this.checkToken = this.checkToken.bind(this);
   }
 
@@ -47,11 +47,6 @@ class App extends Component {
       return true;
     }
   }
-
-  authUser(){
-    window.location.replace(`${authentication.endpoint}?client_id=${authentication.clientId}&redirect_uri=${authentication.redirectUri}&scope=${authentication.scopes.join("%20")}&response_type=token`);
-  }
-
 
   async componentDidMount() {
     // Set token
@@ -114,35 +109,7 @@ render() {
     <Navigation user={this.state.user}/>
     <Container className="App">
       {!this.state.token &&(
-        <div>
-        <Jumbotron>
-          <h1>Suggestions For Spotify</h1>
-          <p>
-            For all music enthusiasts! Use your Spotify library to discover new songs daily!
-          </p>
-          New algorithms and criteria are provided with new ones on the way to fit all your moods.
-          <p>
-            <Button variant="success" onClick={this.authUser}>Login to Spotify</Button>
-          </p>
-        </Jumbotron>
-        <Accordion>
-        <Card >
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-        Permissions required
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-        <Card.Body>
-        "user-top-read":<br />
-        Retrieves the user top liked tracks. It is one of the algorithms used to provide recommendations. <br />
-        "user-library-read": <br />
-        Retrieves the user saved tracks.  <br />
-        "user-read-recently-played"<br />
-        Retrieves the list of recently played tracks.<br />
-        </Card.Body>
-        </Accordion.Collapse>
-        </Card>
-        </Accordion>
-        </div>
+        <NotLoggedIn />
       )}
       {this.state.token &&(
         <div className="contentDiv">
