@@ -1,6 +1,7 @@
 import React from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
-import {signOut, authUser} from '../Helper/Data'
+import {signOut, authUser} from '../Helper/Data';
+import authentication from '../config/authentication';
 
 export const Navigation = props=>{
     return(
@@ -22,7 +23,7 @@ export const Navigation = props=>{
         {
             (props.user !== undefined && props.user.display_name!== '') || props.userError!=="" ? (
             <Nav>
-            <Nav.Link href="mailto:feedback@kghandour.com?subject=[Feedback]%20Suggestions%For%Spotify">Send Feedback</Nav.Link>
+            <Nav.Link href={"mailto:"+authentication.feedbackEmail+"?subject=[Feedback]"+authentication.title} target="_blank">Send Feedback</Nav.Link>
             <Nav.Link href={props.user.external_urls.spotify} target="_blank" className="greenNavButton">
                 <b>{props.user.display_name.split(" ")[0]}</b>
             </Nav.Link>
@@ -30,7 +31,7 @@ export const Navigation = props=>{
             </Nav>
             ):
             <Nav>
-            <Nav.Link href="mailto:feedback@kghandour.com?subject=[Feedback]SuggestionsForSpotify" target="_blank">Send Feedback</Nav.Link>
+            <Nav.Link href={"mailto:"+authentication.feedbackEmail+"?subject=[Feedback]"+authentication.title} target="_blank">Send Feedback</Nav.Link>
             <Nav.Link onClick={authUser}>Login</Nav.Link>
             </Nav>
         }

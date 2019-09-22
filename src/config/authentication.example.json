@@ -6,5 +6,8 @@
         "user-top-read",
         "user-library-read",
         "user-read-recently-played"
-    ]
+    ],
+    "bugsEmail":"bugs@website.com",
+    "feedbackEmail":"feedback@website.com",
+    "title":"APP_TITLE"
 }
