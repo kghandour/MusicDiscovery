@@ -7,13 +7,6 @@ export const Navigation = props=>{
     return(
         <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg" sticky="top">
             <Navbar.Brand>
-            <img
-                alt=""
-                src="/logo.svg"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-            />
             Suggestions For Spotify - <button style={{backgroundColor:'green', color: 'white', border: 'none', cursor: 'default'}}>BETA</button>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
