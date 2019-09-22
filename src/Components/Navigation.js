@@ -5,7 +5,7 @@ import {signOut, authUser} from '../Helper/Data'
 export const Navigation = props=>{
     return(
         <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg" sticky="top">
-            <Navbar.Brand href="#home">
+            <Navbar.Brand>
             <img
                 alt=""
                 src="/logo.svg"
@@ -13,7 +13,7 @@ export const Navigation = props=>{
                 height="30"
                 className="d-inline-block align-top"
             />
-            Spotify Suggestions
+            Suggestions For Spotify - BETA
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             
