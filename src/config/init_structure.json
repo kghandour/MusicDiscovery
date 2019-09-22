@@ -131,6 +131,12 @@
     "isLoadingRecentlyPlayed": true,
     "isLoadingRecommendationsRecentlyPlayed": true,
     "isLoadingSavedTracks":true,
-    "isLoadingRecommendationsSavedTracks": true
-
+    "isLoadingRecommendationsSavedTracks": true,
+    "userError":"",
+    "topTrackError":"",
+    "recommendationsError":"",
+    "recentlyPlayedError":"",
+    "recommendationsRecentlyPlayedError":"",
+    "savedTracksError":"",
+    "recommendationsSavedTracksError":""
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Accordion, Button} from 'react-bootstrap'
+import {Card, Accordion} from 'react-bootstrap'
 
 export const TopTracks = props => {
     const tracks = props.topTracks.items;

@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 // import hash from "./hash";
 import "./App.css";
-import {UserBar} from "./Components/UserProfile"
 import GetRecommendations from "./Components/GetRecommendations";
 import {NotLoggedIn} from './Components/NotLoggedIn';
 import {TopTracks, RecentlyPlayed} from "./Components/TopTracks";
 import {Navigation, Footer} from './Components/Navigation'
 import 'bootstrap/dist/css/bootstrap.css'
-import {Container, Spinner, Tabs, Tab, Button, Jumbotron, Card, Accordion} from 'react-bootstrap'
+import {Container, Spinner, Tabs, Tab} from 'react-bootstrap'
 import {getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from './Helper/Data'
-import authentication from './config/authentication.json'
 import initStructure from './config/init_structure.json'
+import {ErrorAlert} from './Components/ErrorAlert'
 
 // Get the hash of the url
 const hash = window.location.hash
@@ -65,48 +64,96 @@ class App extends Component {
       this.setState({
         token: _token
       });
-      const user = await getUserInfo(_token);
-      this.setState({
-        user: user,
-        isLoadingUser: false
-      });
-      const topTracks= await getTopTracks(_token);
-      this.setState({
-        topTracks: topTracks,
-        isLoadingTopTracks: false
-      });
-      const recommendations = await getRecommendations(_token,topTracks);
-      this.setState({
-        recommendations: recommendations,
-        isLoadingRecommendations: false
-      });
-      const recentlyPlayed = await getRecentlyPlayed(_token);
-      this.setState({
-        recentlyPlayed: recentlyPlayed,
-        isLoadingRecentlyPlayed: false
-      });
-      const recommendationsRecentlyPlayed = await getRecommendationsRecentlyPlayed(_token, recentlyPlayed);
 
-      this.setState({
-        recommendationsRecentlyPlayed: recommendationsRecentlyPlayed,
-        isLoadingRecommendationsRecentlyPlayed: false
-      })
+      try{
+        const user = await getUserInfo(_token);
+        this.setState({
+          user: user,
+          isLoadingUser: false
+        });
+      }catch(error){
+        this.setState({
+          userError: error
+        });
+      }
+
+      try{
+        const topTracks= await getTopTracks(_token);
+        this.setState({
+          topTracks: topTracks,
+          isLoadingTopTracks: false
+        });
+      }catch(error){
+        this.setState({
+          topTracksError: error.message
+        });
+      }
+
+      try{
+        const recommendations = await getRecommendations(_token,this.state.topTracks);
+        this.setState({
+          recommendations: recommendations,
+          isLoadingRecommendations: false
+        });
+      }catch(error){
+        this.setState({
+          recommendationsError: error.message
+        });
+      }
+      try{
+        const recentlyPlayed = await getRecentlyPlayed(_token);
+        this.setState({
+          recentlyPlayed: recentlyPlayed,
+          isLoadingRecentlyPlayed: false
+        });
+      }catch(error){
+        this.setState({
+          recentlyPlayedError: error.message
+        });
+      }
+
+      try{
+        const recommendationsRecentlyPlayed = await getRecommendationsRecentlyPlayed(_token, this.state.recentlyPlayed);
+        this.setState({
+          recommendationsRecentlyPlayed: recommendationsRecentlyPlayed,
+          isLoadingRecommendationsRecentlyPlayed: false
+        })
+      }catch(error){
+        this.setState({
+          recommendationsRecentlyPlayedError: error.message
+        });
+      }
+
+      try{
       const savedTracks= await getSavedTracks(_token);
       this.setState({
         savedTracks: savedTracks,
         isLoadingSavedTracks: false
       });
-      const recommendationsSavedTracks = await getRecommendationsRecentlyPlayed(_token,savedTracks);
-      this.setState({
-        recommendationsSavedTracks: recommendationsSavedTracks,
-        isLoadingRecommendationsSavedTracks: false
-      });
+      }catch(error){
+        this.setState({
+          savedTracksError: error.message
+        });
+      }
+
+      try{
+        const recommendationsSavedTracks = await getRecommendationsRecentlyPlayed(_token,this.state.savedTracks);
+        this.setState({
+          recommendationsSavedTracks: recommendationsSavedTracks,
+          isLoadingRecommendationsSavedTracks: false
+        });
+      }catch(error){
+        this.setState({
+          recommendationsSavedTracksError: error.message
+        });
+      }
+
     }
   }
 render() {
   return (
     <span>
-    <Navigation user={this.state.user}/>
+    <Navigation user={this.state.user} userError={this.state.userError}/>
     <Container className="App">
       {!this.state.token &&(
         <NotLoggedIn />
@@ -116,33 +163,45 @@ render() {
           <Tabs defaultActiveKey="topTracks" id="uncontrolled-tab-example">
             <Tab eventKey="topTracks" title="Top Tracks">
               {this.state.isLoadingRecommendations ?
-              <Spinner animation="border" variant="success" /> :
+              ( this.state.recommendationsError ? 
+                <ErrorAlert error={this.state.recommendationsError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <GetRecommendations recommendations={this.state.recommendations}/>}
               {this.state.isLoadingTopTracks ? 
-              <Spinner animation="border" variant="success" />:
+              ( this.state.topTracksError ? 
+                <ErrorAlert error={this.state.topTracksError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <TopTracks topTracks={this.state.topTracks} title="View your top liked tracks"/>}
             </Tab>
             <Tab eventKey="recentlyPlayed" title="Recently Played">
               {this.state.isLoadingRecommendationsRecentlyPlayed ?
-              <Spinner animation="border" variant="success" /> :
+              ( this.state.recommendationsRecentlyPlayedError ? 
+                <ErrorAlert error={this.state.recommendationsRecentlyPlayedError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <GetRecommendations recommendations={this.state.recommendationsRecentlyPlayed}/>}
               {this.state.isLoadingRecentlyPlayed ? 
-              <Spinner animation="border" variant="success" />:
+              ( this.state.recentlyPlayedError ? 
+                <ErrorAlert error={this.state.recentlyPlayedError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <RecentlyPlayed topTracks={this.state.recentlyPlayed} title="View your recently played tracks"/>}
             </Tab>
             <Tab eventKey="savedTracks" title="Saved Tracks">
               {this.state.isLoadingRecommendationsSavedTracks ?
-              <Spinner animation="border" variant="success" /> :
+              ( this.state.recommendationsSavedTracksError ? 
+                <ErrorAlert error={this.state.recommendationsSavedTracksError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <GetRecommendations recommendations={this.state.recommendationsSavedTracks}/>}
               {this.state.isLoadingSavedTracks ? 
-              <Spinner animation="border" variant="success" />:
+              ( this.state.savedTracksError ? 
+                <ErrorAlert error={this.state.savedTracksError} /> :
+                <Spinner animation="border" variant="success" /> ):
               <RecentlyPlayed topTracks={this.state.savedTracks} title="View your recently liked tracks"/>}
             </Tab>
           </Tabs>
         </div>
       )}
     </Container>
-    <Footer user={this.state.user}/>
+    <Footer user={this.state.user} userError={this.state.userError}/>
     </span>
   );
   }

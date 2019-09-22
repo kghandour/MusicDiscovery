@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
-import {signOut} from '../Helper/Data'
+import {signOut, authUser} from '../Helper/Data'
 
 export const Navigation = props=>{
     return(
@@ -16,18 +16,25 @@ export const Navigation = props=>{
             Spotify Suggestions
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        {
-            props.user !== undefined && props.user.display_name!== '' && (
+            
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
+        {
+            (props.user !== undefined && props.user.display_name!== '' || props.userError!=="" )? (
+            <Nav>
             <Nav.Link href={props.user.external_urls.spotify} target="_blank" className="greenNavButton">
                 <b>{props.user.display_name.split(" ")[0]}</b>
             </Nav.Link>
             <Nav.Link onClick={signOut}>Sign out</Nav.Link>
-            </Navbar.Collapse>
-            )
-            
+            </Nav>
+            ):
+            <Nav>
+            <Nav.Link onClick={authUser}>Login</Nav.Link>
+            </Nav>
         }
+            </Navbar.Collapse>
+            
+
         
     </Navbar>
     );
@@ -45,12 +52,8 @@ const FooterItems = props=>{
 
 export const Footer = props =>{
     return(
-        (props.user !== undefined && props.user.display_name!== '') ?
-        (<Navbar bg="dark" variant="dark" className="justify-content-md-center footer">
+        <Navbar bg="dark" variant="dark" className="justify-content-md-center footer">
             <FooterItems/>
-        </Navbar>) :
-        (<Navbar bg="dark" variant="dark" fixed="bottom" className="justify-content-md-center footer">
-            <FooterItems/>
-        </Navbar>)
+        </Navbar>
     );
 }

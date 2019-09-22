@@ -1,5 +1,5 @@
 import React from 'react'
-import {Media, Card, CardDeck,Button,Col, Row, Image} from 'react-bootstrap'
+import {Card, CardDeck,Button,Col, Row} from 'react-bootstrap'
 import spotifyImage from '../Spotify_Icon_RGB_White.png'
 export const GetRecommendations = props =>{
     const tracks = [...props.recommendations.tracks].splice(0,3);
@@ -21,7 +21,7 @@ export const GetRecommendations = props =>{
       <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
         <div className="listOther">
         {index+4}. {track.name} - {track.artists[0].name}
-        <img src={spotifyImage} width="21px" style={{float:"right"}}/>
+        <img src={spotifyImage} width="21px" style={{float:"right"}} alt=""/>
         </div>
       </a>
       </Col>
