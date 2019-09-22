@@ -20,7 +20,7 @@ export const Navigation = props=>{
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto"></Nav>
         {
-            (props.user !== undefined && props.user.display_name!== '' || props.userError!=="" )? (
+            (props.user !== undefined && props.user.display_name!== '') || props.userError!=="" ? (
             <Nav>
             <Nav.Link href={props.user.external_urls.spotify} target="_blank" className="greenNavButton">
                 <b>{props.user.display_name.split(" ")[0]}</b>
