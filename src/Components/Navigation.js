@@ -47,7 +47,7 @@ const FooterItems = props=>{
     return(
         <Nav md="auto">
             <Nav.Item>
-                Suggestions For Spotify is an open-source project developed by <a href="https://kghandour.com">Karim ElGhandour</a>
+                Suggestions For Spotify is an <a href="https://github.com/kghandour/suggestionsforspotify">open-source project</a> developed by <a href="https://kghandour.com">Karim ElGhandour</a>
             </Nav.Item>
         </Nav>
     );
