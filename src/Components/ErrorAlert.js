@@ -11,8 +11,7 @@ export const ErrorAlert = props =>{
           <p>
             This rarely happens! Please try to report it to the developer. <br />
             Email: bugs@kghandour.com<br />
-            Title: Songs for Spotify Error<br />
-            Body: Error obtained {props.error}
+            <a href='mailto:bugs@kghandour.com?subject=[Bug]SuggestionsForSpotify'>Press here to report to the developer</a>
           </p>
         </Alert>
       );

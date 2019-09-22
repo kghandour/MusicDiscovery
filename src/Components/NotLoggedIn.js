@@ -10,10 +10,14 @@ export const NotLoggedIn = props =>{
           <p>
             For all music enthusiasts! Use your Spotify library to discover new songs daily!
           </p>
+          <h6>
           New algorithms and criteria are provided with new ones on the way to fit all your moods.
+          </h6>
           <p>
-            <Button variant="success" onClick={authUser}>Login to Spotify</Button>
+            <Button variant="success" onClick={authUser}>Authorize Spotify</Button>
           </p>
+          <span>The official Spotify API is used. <b>We do NOT have access to your private information.</b> <br />
+          Once you press the button, you will be redirected to the official Spotify Website to login. Again, we can <b>NOT</b> see your password.<br /></span>
         </Jumbotron>
         <Accordion>
         <Card >
