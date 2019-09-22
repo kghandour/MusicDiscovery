@@ -6,8 +6,8 @@ Discover new tracks everyday based on your tastes. The user top tracks, saved tr
 1. Head over to https://developer.spotify.com/dashboard and record a new application.
 2. Copy the client id registered
 3. `npm install`
-4. Navigate to the ./config/ folder
-5. Rename authentication.example.json to authentication.json
+4. Navigate to the `./src/config/` folder
+5. Rename `authentication.example.json` to `authentication.json`
 6. Modify the clientID, redirect URI, feedbackEmail, bugsEmail and title entries.
 7. `npm start`
 
