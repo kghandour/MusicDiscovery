@@ -1,7 +1,7 @@
 {
     "endpoint" : "https://accounts.spotify.com/authorize",
     "clientId":"CLIENT_ID_FROM_DASHBOARD",
-    "redirectUri":"https://kghandour.com/SuggestionsForSpotify",
+    "redirectUri":"REDIRECT_URL_CALLBACK_HERE",
     "scopes" : [
         "user-top-read",
         "user-library-read",
