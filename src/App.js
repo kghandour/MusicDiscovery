@@ -1,9 +1,7 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
-import { Container, Button } from 'react-bootstrap';
 import { NotLoggedIn } from './Components/NoAuth';
-import { isLogin } from './Helper';
 import Recommendations from './Pages/Recommendations';
 import {Navigation} from './Components/Navs';
 

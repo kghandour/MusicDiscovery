@@ -99,3 +99,16 @@ a.dropdown-item:hover{
   color: black;
   background: #B21B1B;
 }
+
+.card-title.h5, .media-body h5{
+  font-size: 1.2em;
+}
+
+.card-subtitle.h6, .media-body p{
+  font-size: 0.8em;
+}
+
+.text-center.footer{
+  font-size: 0.8em;
+}
+

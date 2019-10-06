@@ -1,24 +1,27 @@
 import React from 'react';
 import { Container, Dropdown, DropdownButton, Button, Spinner } from 'react-bootstrap'
 import { Tracks } from '../Components/Tracks';
-import { getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed } from '../Helper/Data'
+import { addTracksToPlaylist, createPlaylist, getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed } from '../Helper/Data'
 import initStructure from '../config/init_structure.json'
 import { ErrorAlert } from '../Components/ErrorAlert'
+import { ToastContainer, toast } from 'react-toastify';
+import {Footer} from '../Components/Footer'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 var token;
+
 const filterList = ['Your Top Tracks', 'Your Recently Played', 'Your Recently Saved Tracks'];
 class Recommendations extends React.Component {
     constructor(props) {
         super(props)
         this.state = initStructure;
         this.filterSearch = this.filterSearch.bind(this);
-        this.createPlaylist = this.createPlaylist.bind(this);
+        this.onCreatePlaylist = this.onCreatePlaylist.bind(this);
         token = props.token;
     }
 
     async filterSearch(title) {
-        console.log(title)
         this.setState({
             filterTitle: title
         })
@@ -87,6 +90,18 @@ class Recommendations extends React.Component {
 
     async componentDidMount() {
         try {
+            const user = await getUserInfo(token);
+            this.setState({
+                user: user,
+                isLoadingUser: false
+            });
+        } catch (error) {
+            this.setState({
+                userError: error
+            });
+        }
+
+        try {
             const topTracks = await getTopTracks(token);
             this.setState({
                 token: token,
@@ -114,9 +129,27 @@ class Recommendations extends React.Component {
 
     }
 
-    createPlaylist(){
-        console.log("creating playlist")
+    async onCreatePlaylist() {
+        try {
+            const createPlaylistRes = await createPlaylist(token, this.state.user.id, this.state.filterTitle);
+            if (this.state.filterTitle === filterList[0])
+                await addTracksToPlaylist(token, createPlaylistRes.id, this.state.recommendations.tracks);
+            if (this.state.filterTitle === filterList[1])
+                await addTracksToPlaylist(token, createPlaylistRes.id, this.state.recommendationsRecentlyPlayed.tracks);
+            if (this.state.filterTitle === filterList[2])
+                await addTracksToPlaylist(token, createPlaylistRes.id, this.state.recommendationsSavedTracks.tracks);
+            this.setState({
+                playlist_link: createPlaylistRes.uri
+            })
+            toast.success("Successfully created playlist. Click here to open it.")
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+
+
+
 
     render() {
         return (
@@ -135,9 +168,8 @@ class Recommendations extends React.Component {
                             )}
                         </DropdownButton>
                     </div>
-                    <Button className="create-playlist" onClick={this.createPlaylist}>Create Playlist</Button><br />
-
-
+                    <Button className="create-playlist" onClick={this.onCreatePlaylist}>Create Playlist</Button><br />
+                    <a href={this.state.playlist_link}><ToastContainer /></a>
                     {this.state.filterTitle === filterList[0] ? (this.state.isLoadingRecommendations ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
@@ -154,6 +186,7 @@ class Recommendations extends React.Component {
                             <Spinner animation="border" variant="danger" />) :
                         <Tracks recommendations={this.state.recommendationsSavedTracks} />) : null}
                 </div>
+                <Footer />
             </Container>
         )
     }

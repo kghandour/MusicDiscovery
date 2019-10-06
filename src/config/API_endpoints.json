@@ -5,5 +5,8 @@
     "user_info":"me",
     "recommendations":"recommendations",
     "recently_played":"me/player/recently-played",
-    "saved_tracks":"me/tracks"
+    "saved_tracks":"me/tracks",
+    "create_playlist_1":"users/",
+    "create_playlist_2":"playlists",
+    "add_tracks":"/tracks"
 }
