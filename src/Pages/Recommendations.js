@@ -13,6 +13,7 @@ class Recommendations extends React.Component {
         super(props)
         this.state = initStructure;
         this.filterSearch = this.filterSearch.bind(this);
+        this.createPlaylist = this.createPlaylist.bind(this);
         token = props.token;
     }
 
@@ -113,6 +114,10 @@ class Recommendations extends React.Component {
 
     }
 
+    createPlaylist(){
+        console.log("creating playlist")
+    }
+
     render() {
         return (
             <Container>
@@ -130,23 +135,23 @@ class Recommendations extends React.Component {
                             )}
                         </DropdownButton>
                     </div>
-                    <Button className="create-playlist">Create Playlist</Button><br />
+                    <Button className="create-playlist" onClick={this.createPlaylist}>Create Playlist</Button><br />
 
 
                     {this.state.filterTitle === filterList[0] ? (this.state.isLoadingRecommendations ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
-                            <Spinner animation="border" variant="success" />) :
+                            <Spinner animation="border" variant="danger" />) :
                         <Tracks recommendations={this.state.recommendations} />) : null}
                     {this.state.filterTitle === filterList[1] ? (this.state.isLoadingRecommendationsRecentlyPlayed ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
-                            <Spinner animation="border" variant="success" />) :
+                            <Spinner animation="border" variant="danger" />) :
                         <Tracks recommendations={this.state.recommendationsRecentlyPlayed} />) : null}
                     {this.state.filterTitle === filterList[2] ? (this.state.isLoadingRecommendationsSavedTracks ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
-                            <Spinner animation="border" variant="success" />) :
+                            <Spinner animation="border" variant="danger" />) :
                         <Tracks recommendations={this.state.recommendationsSavedTracks} />) : null}
                 </div>
             </Container>

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Link, BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.css'
 import './index.css';
 import App from './App';
 import Profile from './Pages/Profile'
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.css'
 
 
 ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));

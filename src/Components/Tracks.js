@@ -6,17 +6,19 @@ export const Tracks = (props) => {
     const tracks2 = [...props.recommendations.tracks].splice(3);
     const listTracks = tracks.map((track) =>
         <Col xs={4} key={track.id} className="d-flex flex-column">
-            <Card>
-                <Card.Img variant="top" src={track.album.images[1].url} alt=""/>
-                <Card.Body >
-                    <Card.Title>{track.name}</Card.Title>
-                    <Card.Subtitle>{track.artists[0].name}</Card.Subtitle>
-                </Card.Body>
-            </Card>
+            <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <Card>
+                    <Card.Img variant="top" src={track.album.images[1].url} alt="" />
+                    <Card.Body >
+                        <Card.Title>{track.name}</Card.Title>
+                        <Card.Subtitle>{track.artists[0].name}</Card.Subtitle>
+                    </Card.Body>
+                </Card>
+            </a>
         </Col>
     );
     const listTracks2 = tracks2.map((track) =>
-        <Media key={track.id}>
+        <Media key={track.id} >
             <img
                 width={64}
                 height={64}
@@ -25,21 +27,23 @@ export const Tracks = (props) => {
                 alt=""
             />
             <Media.Body>
-            <h5>{track.name}</h5>
-            <p>
-                {track.artists[0].name}
-            </p>
+                <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                    <h5>{track.name}</h5>
+                    <p>
+                        {track.artists[0].name}
+                    </p>
+                </a>
             </Media.Body>
         </Media>
     );
 
     return (
         <div>
-        <Row>
-            {listTracks}<br />
-        </Row>
-        {listTracks2}
+            <Row>
+                {listTracks}<br />
+            </Row>
+            {listTracks2}
         </div>
-        
+
     )
 }

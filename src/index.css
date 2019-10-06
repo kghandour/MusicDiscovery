@@ -85,3 +85,17 @@ code {
 .media-body{
   text-align: left;
 }
+
+a, a:hover, a:visited{
+  text-decoration: none;
+  color: white;
+}
+
+a.dropdown-item{
+  color:black;
+}
+
+a.dropdown-item:hover{
+  color: black;
+  background: #B21B1B;
+}
