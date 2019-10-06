@@ -112,3 +112,11 @@ a.dropdown-item:hover{
   font-size: 0.8em;
 }
 
+a.nav-link{
+  font-weight: bold;
+  padding: 12px 0;
+}
+.not-logged-in{
+  padding: 10px 0;
+}
+
