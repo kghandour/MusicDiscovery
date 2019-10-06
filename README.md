@@ -1,4 +1,4 @@
-# Suggestions For Spotify
+# Music Discovery
 
 Discover new tracks everyday based on your tastes. The user top tracks, saved tracks and recently played tracks are used to retrieve recommendations that matches the user's tastes.
 
