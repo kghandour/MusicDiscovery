@@ -3,6 +3,7 @@ import logo from '../res/Asset 1.svg';
 import spotifyWhite from '../res/spotify_white.png';
 import {Button, Container } from 'react-bootstrap';
 import { authUser } from '../Helper/Data';
+import {Footer} from './Footer';
 export const NotLoggedIn = props => {
     const isLoggedIn = props.isLoggedIn;
     return (
@@ -16,6 +17,9 @@ export const NotLoggedIn = props => {
             <p>
                 No login credentials are accessible by music discovery
             </p>
+            <div className="footer-not-logged-in">
+                <Footer />
+            </div>
         </Container>
     )
 
