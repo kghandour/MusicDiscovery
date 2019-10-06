@@ -5,7 +5,9 @@
     "scopes" : [
         "user-top-read",
         "user-library-read",
-        "user-read-recently-played"
+        "user-read-recently-played",
+        "playlist-modify-public",
+        "playlist-modify-private"
     ],
     "bugsEmail":"bugs@website.com",
     "feedbackEmail":"feedback@website.com",
