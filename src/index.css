@@ -102,6 +102,11 @@ a.dropdown-item:hover{
 
 .card-title.h5, .media-body h5{
   font-size: 1em;
+  font-weight:bold;
+}
+
+.card-body{
+  padding: 1.25rem 0.1rem !important;
 }
 
 .card-subtitle.h6, .media-body p{
