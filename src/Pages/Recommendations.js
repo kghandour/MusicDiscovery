@@ -29,7 +29,6 @@ class Recommendations extends React.Component {
             try {
                 if (this.state.isLoadingRecentlyPlayed) {
                     const recentlyPlayed = await getRecentlyPlayed(token);
-
                     this.setState({
                         recentlyPlayed: recentlyPlayed,
                         isLoadingRecentlyPlayed: false
@@ -41,8 +40,12 @@ class Recommendations extends React.Component {
                 });
             }
 
-
-            if (this.state.recentlyPlayed !== undefined && this.state.recentlyPlayed.items && this.state.recentlyPlayed.items.length > 0 && this.state.recentlyPlayed.items[0].track && this.state.recentlyPlayed.items[0].track.id ) {
+            if(this.state.recentlyPlayedError === "Network Error"){
+                this.setState({
+                    recommendationsRecentlyPlayedError: this.state.recentlyPlayedError
+                });
+            }
+            else if (this.state.recentlyPlayed !== undefined && this.state.recentlyPlayed.items && this.state.recentlyPlayed.items.length > 0 && this.state.recentlyPlayed.items[0].track && this.state.recentlyPlayed.items[0].track.id ) {
                 try {
                     if (this.state.isLoadingRecommendationsRecentlyPlayed) {
                         const [recommendationsRecentlyPlayed, chosenRecentlyPlayed] = await getRecommendationsRecentlyPlayed(token, this.state.recentlyPlayed);
@@ -79,7 +82,13 @@ class Recommendations extends React.Component {
                     savedTracksError: error.message
                 });
             }
-            if (this.state.savedTracks !== undefined && this.state.savedTracks.items && this.state.savedTracks.items.length > 0 && this.state.savedTracks.items[0].track && this.state.savedTracks.items[0].track.id ) {
+
+            if(this.state.savedTracksError === "Network Error"){
+                this.setState({
+                    recommendationsSavedTracksError: this.state.recentlyPlayedError
+                });
+            }
+            else if (this.state.savedTracks !== undefined && this.state.savedTracks.items && this.state.savedTracks.items.length > 0 && this.state.savedTracks.items[0].track && this.state.savedTracks.items[0].track.id ) {
 
                 try {
                     if (this.state.isLoadingRecommendationsSavedTracks) {
@@ -130,8 +139,12 @@ class Recommendations extends React.Component {
                 topTracksError: error.message
             });
         }
-
-        if (this.state.topTracks !== undefined && this.state.topTracks.items && this.state.topTracks.items.length > 0 && this.state.topTracks.items[0].id ) {
+        if(this.state.topTracksError === "Network Error"){
+            this.setState({
+                recommendationsError: this.state.topTracksError
+            });
+        }
+        else if (this.state.topTracks !== undefined && this.state.topTracks.items && this.state.topTracks.items.length > 0 && this.state.topTracks.items[0].id ) {
 
             try {
                 const [recommendations, chosenTopTracks] = await getRecommendations(token, this.state.topTracks);
