@@ -137,3 +137,13 @@ a.nav-link{
 	font-size: 0.8em;
 	margin-top: 10px;
 }
+
+.chosenTrack{
+  margin-right: 5px;
+}
+
+.listenedTo{
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  text-align: left;
+}

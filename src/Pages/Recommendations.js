@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Dropdown, DropdownButton, Button, Spinner } from 'react-bootstrap'
 import { Tracks } from '../Components/Tracks';
-import { addTracksToPlaylist, createPlaylist, getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed } from '../Helper/Data'
+import { addTracksToPlaylist, createPlaylist, getRecommendations, getRecommendationsRecentlyPlayed, getSavedTracks, getTopTracks, getUserInfo, getRecentlyPlayed} from '../Helper/Data'
 import initStructure from '../config/init_structure.json'
 import { ErrorAlert } from '../Components/ErrorAlert'
 import { ToastContainer, toast } from 'react-toastify';
@@ -42,10 +42,11 @@ class Recommendations extends React.Component {
 
             try {
                 if (this.state.isLoadingRecommendationsRecentlyPlayed) {
-                    const recommendationsRecentlyPlayed = await getRecommendationsRecentlyPlayed(token, this.state.recentlyPlayed);
+                    const [recommendationsRecentlyPlayed, chosenRecentlyPlayed] = await getRecommendationsRecentlyPlayed(token, this.state.recentlyPlayed);
                     this.setState({
                         recommendationsRecentlyPlayed: recommendationsRecentlyPlayed,
-                        isLoadingRecommendationsRecentlyPlayed: false
+                        isLoadingRecommendationsRecentlyPlayed: false,
+                        chosenRecentlyPlayed: chosenRecentlyPlayed
                     })
                 }
             } catch (error) {
@@ -61,7 +62,7 @@ class Recommendations extends React.Component {
                     const savedTracks = await getSavedTracks(token);
                     this.setState({
                         savedTracks: savedTracks,
-                        isLoadingSavedTracks: false
+                        isLoadingSavedTracks: false,
                     });
                 }
             } catch (error) {
@@ -72,10 +73,11 @@ class Recommendations extends React.Component {
 
             try {
                 if (this.state.isLoadingRecommendationsSavedTracks) {
-                    const recommendationsSavedTracks = await getRecommendationsRecentlyPlayed(token, this.state.savedTracks);
+                    const [recommendationsSavedTracks, chosenRecentlySaved] = await getRecommendationsRecentlyPlayed(token, this.state.savedTracks);
                     this.setState({
                         recommendationsSavedTracks: recommendationsSavedTracks,
-                        isLoadingRecommendationsSavedTracks: false
+                        isLoadingRecommendationsSavedTracks: false,
+                        chosenRecentlySaved: chosenRecentlySaved
                     });
                 }
             } catch (error) {
@@ -115,10 +117,11 @@ class Recommendations extends React.Component {
         }
 
         try {
-            const recommendations = await getRecommendations(token, this.state.topTracks);
+            const [recommendations, chosenTopTracks] = await getRecommendations(token, this.state.topTracks);
             this.setState({
                 recommendations: recommendations,
-                isLoadingRecommendations: false
+                isLoadingRecommendations: false,
+                chosenTopTracks: chosenTopTracks
             });
         } catch (error) {
             this.setState({
@@ -174,17 +177,17 @@ class Recommendations extends React.Component {
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
                             <Spinner animation="border" variant="danger" />) :
-                        <Tracks recommendations={this.state.recommendations} />) : null}
+                        <Tracks recommendations={this.state.recommendations} chosenTracks={this.state.chosenTopTracks}/>) : null}
                     {this.state.filterTitle === filterList[1] ? (this.state.isLoadingRecommendationsRecentlyPlayed ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
                             <Spinner animation="border" variant="danger" />) :
-                        <Tracks recommendations={this.state.recommendationsRecentlyPlayed} />) : null}
+                        <Tracks recommendations={this.state.recommendationsRecentlyPlayed} chosenTracks={this.state.chosenRecentlyPlayed}/>) : null}
                     {this.state.filterTitle === filterList[2] ? (this.state.isLoadingRecommendationsSavedTracks ?
                         (this.state.recommendationsError ?
                             <ErrorAlert error={this.state.recommendationsError} /> :
                             <Spinner animation="border" variant="danger" />) :
-                        <Tracks recommendations={this.state.recommendationsSavedTracks} />) : null}
+                        <Tracks recommendations={this.state.recommendationsSavedTracks} chosenTracks={this.state.chosenRecentlySaved}/>) : null}
                 </div>
                 <Footer />
             </Container>

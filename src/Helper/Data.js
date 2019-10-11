@@ -97,17 +97,21 @@ export const getRecentlyPlayed = async (token) => {
   return res.data;
 }
 
+
 export const getRecommendations = async (token, topTracks) => {
   const topTracksShuffled = shuffleArray(topTracks.items);
   var parameterString = "";
+  var chosenTracks = [];
   var upperLimit = 4;
   var x = 0;
   if (topTracksShuffled.length < 5)
     upperLimit = topTracksShuffled.length - 1;
   for (x = 0; x < upperLimit; x++) {
-    parameterString += topTracksShuffled[x].id + ','
+    parameterString += topTracksShuffled[x].id + ',';
+    chosenTracks.push(topTracksShuffled[x]);
   }
   parameterString += topTracksShuffled[x].id;
+  chosenTracks.push(topTracksShuffled[x]);
   const res = await axios.get(
     API.API_base + API.recommendations, {
     headers: { Authorization: 'Bearer ' + token },
@@ -115,20 +119,25 @@ export const getRecommendations = async (token, topTracks) => {
       seed_tracks: parameterString
     }
   });
-  return res.data;
+  return [res.data, chosenTracks];
 }
+
 
 export const getRecommendationsRecentlyPlayed = async (token, topTracks) => {
   // const topTracksShuffled = shuffleArray(topTracks.items);
+  var chosenTracks = [];
   var parameterString = "";
   var upperLimit = 4;
   var x = 0;
   if (topTracks.items.length < 5)
     upperLimit = topTracks.items.length - 1;
   for (x = 0; x < upperLimit; x++) {
-    parameterString += topTracks.items[x].track.id + ','
+    parameterString += topTracks.items[x].track.id + ',';
+    chosenTracks.push(topTracks.items[x]);
+
   }
   parameterString += topTracks.items[x].track.id
+  chosenTracks.push(topTracks.items[x])
   const res = await axios.get(
     API.API_base + API.recommendations, {
     headers: { Authorization: 'Bearer ' + token },
@@ -137,7 +146,7 @@ export const getRecommendationsRecentlyPlayed = async (token, topTracks) => {
     }
   });
 
-  return res.data;
+  return [res.data,chosenTracks];
 }
 
 export function authUser() {

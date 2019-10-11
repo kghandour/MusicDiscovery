@@ -4,6 +4,8 @@ import { Card, Col, Row, Media } from 'react-bootstrap';
 export const Tracks = (props) => {
     const tracks = [...props.recommendations.tracks].splice(0, 3);
     const tracks2 = [...props.recommendations.tracks].splice(3);
+    const chosenTracks = [...props.chosenTracks];
+
     const listTracks = tracks.map((track) =>
         <Col xs={4} key={track.id} className="d-flex flex-column">
             <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
@@ -37,8 +39,19 @@ export const Tracks = (props) => {
         </Media>
     );
 
+    const chosenTracksList = chosenTracks.map((track, index)=>{
+        if(track.track !== undefined)
+            return <span className="chosenTrack" key={track.track.id}><a href={track.track.external_urls.spotify} target="_blank" rel="noopener noreferrer"><i>{track.track.name.split("(")[0].split("-")[0]}</i></a>{index < chosenTracks.length-1 && <span>,</span>}</span>
+        else
+            return <span className="chosenTrack" key={track.id}><a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer"><i>{track.name.split("(")[0].split("-")[0]}</i></a>{index < chosenTracks.length-1 && <span>,</span>}</span>
+        }
+    );
+
     return (
         <div>
+            <Row className="listenedTo">
+                Because you listened to:&nbsp;{chosenTracksList}
+            </Row>
             <Row>
                 {listTracks}<br />
             </Row>
