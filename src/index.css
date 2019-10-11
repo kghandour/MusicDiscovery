@@ -147,3 +147,8 @@ a.nav-link{
   margin-bottom: 15px;
   text-align: left;
 }
+
+.blackLink a, .blackLink a:visited, .blackLink a:hover{
+  color: black;
+  font-weight: bold;
+}
