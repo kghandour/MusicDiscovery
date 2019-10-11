@@ -10,8 +10,9 @@ export const NotLoggedIn = props => {
         <Container className="center-div not-logged-in">
             <h1>{isLoggedIn}</h1>
             <img src={logo} alt="music discovery" className="large-logo mb-50" /> <br />
-            <Button variant="outline-light" className="authorize-spotify-btn mb-50" onClick={authUser}>Authorize Spotify <img src={spotifyWhite} alt="" width="18px" /></Button> <br />
-            <p className="subtitle-76">
+            <Button variant="outline-light" className="authorize-spotify-btn" onClick={authUser}>Authorize Spotify <img src={spotifyWhite} alt="" width="18px" /></Button> <br />
+            <p className="small-text mb-50">Pressing the button will redirect you to Spotify.com to authorize</p>
+	    <p className="subtitle-76">
                 music discovery uses Spotify API to provide recommendations for you based on your taste.
                 </p>
             <p>
