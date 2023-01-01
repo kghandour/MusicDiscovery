@@ -8,7 +8,7 @@ Discover new tracks everyday based on your tastes. The user top tracks, saved tr
 3. `npm install`
 4. Navigate to the `./src/config/` folder
 5. Rename `authentication.example.json` to `authentication.json`
-6. Modify the clientID, redirect URI, feedbackEmail, bugsEmail and title entries.
+6. Set environment variables for the clientID, redirect URI, feedbackEmail, bugsEmail and title entries.
 7. `npm start`
 
 ## Proper documentation will be written and modified later on with proper comments. 
