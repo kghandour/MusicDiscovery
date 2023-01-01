@@ -24,7 +24,7 @@ export const ErrorAlert = props =>{
           <p>
             {errorBody} <br />
             If the problem continues to persist, please report it to the developer<br />
-            <span className="blackLink"><a href={"mailto:"+process.env.bugsEmail+"?subject=[Bug]"+process.env.title+"&body=Error:"+props.error+""}>Press here to report to the developer</a></span>
+            <span className="blackLink"><a href={"mailto:"+process.env.REACT_APP_BUGSEMAIL+"?subject=[Bug]"+process.env.REACT_APP_TITLE+"&body=Error:"+props.error+""}>Press here to report to the developer</a></span>
           </p>
         </Alert>
       );

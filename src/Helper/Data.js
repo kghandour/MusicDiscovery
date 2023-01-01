@@ -150,7 +150,7 @@ export const getRecommendationsRecentlyPlayed = async (token, topTracks) => {
 }
 
 export function authUser() {
-  window.location.replace(`${authentication.endpoint}?client_id=${process.env.clientId}&redirect_uri=${process.env.redirectUri}&scope=${authentication.scopes.join("%20")}&response_type=token`);
+  window.location.replace(`${authentication.endpoint}?client_id=${process.env.REACT_APP_CLIENTID}&redirect_uri=${process.env.REACT_APP_REDIRECTURI}&scope=${authentication.scopes.join("%20")}&response_type=token`);
 }
 
 function shuffleArray(array2) {
