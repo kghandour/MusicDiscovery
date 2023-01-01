@@ -9,7 +9,7 @@ export const Navigation = (props) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav.Link href={"mailto:" + process.env.feedbackEmail + "?subject=[Feedback]" + process.env.title} target="_blank">
-                    Send Feedback
+                    Send Feedback Email
                 </Nav.Link>
                 <Nav.Link href={"mailto:" + process.env.bugsEmail + "?subject=[Bug]" + process.env.title} target="_blank">
                     Report a Bug
