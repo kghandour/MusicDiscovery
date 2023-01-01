@@ -10,10 +10,10 @@ export const Navigation = (props) => {
         <Navbar expand="xs" className="nav-bar-custom navbar-dark">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav.Link href={"mailto:" + authentication.feedbackEmail + "?subject=[Feedback]" + authentication.title} target="_blank">
+                <Nav.Link href={"mailto:" + process.env.feedbackEmail + "?subject=[Feedback]" + process.env.title} target="_blank">
                     Send Feedback
                 </Nav.Link>
-                <Nav.Link href={"mailto:" + authentication.bugsEmail + "?subject=[Bug]" + authentication.title} target="_blank">
+                <Nav.Link href={"mailto:" + process.env.bugsEmail + "?subject=[Bug]" + process.env.title} target="_blank">
                     Report a Bug
                 </Nav.Link>
                 <Nav.Link onClick={signOut}>
