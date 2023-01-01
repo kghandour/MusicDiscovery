@@ -15,19 +15,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 18.0
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build Node.js 18.0
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
         cache: 'npm'
+    - name: Build
+      run: |
+        npm install
+        npm run build --if-present
       env:
         REDIRECTURI: ${{ secrets.REDIRECTURI }}
         FEEDBACKEMAIL: ${{ secrets.FEEDBACKEMAIL }}
         CLIENTID: ${{ secrets.CLIENTID }}
         BUGSEMAIL: ${{ secrets.BUGSEMAIL }}
-    - run: npm install
-    - run: npm run build --if-present
-    - uses: JamesIves/github-pages-deploy-action@v4
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: build
