@@ -2,8 +2,6 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import logo from '../res/Asset 1.svg';
 import {signOut} from '../Helper/Data';
-import authentication from '../config/authentication';
-
 
 export const Navigation = (props) => {
     return (
