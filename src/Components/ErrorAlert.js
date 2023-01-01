@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-bootstrap';
-import authentication from '../config/authentication';
 
 export const ErrorAlert = props =>{
     var errorTitle = "";
