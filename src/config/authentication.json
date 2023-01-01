@@ -1,0 +1,10 @@
+{
+    "endpoint" : "https://accounts.spotify.com/authorize",
+    "scopes" : [
+        "user-top-read",
+        "user-library-read",
+        "user-read-recently-played",
+        "playlist-modify-public",
+        "playlist-modify-private"
+    ]
+}
